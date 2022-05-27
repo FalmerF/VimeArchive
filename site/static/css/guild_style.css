@@ -1,0 +1,163 @@
+.content-place {
+	width: 66.5em;
+	min-height: 10em;
+	margin: auto;
+	margin-top: 1.5em;
+	display: flex;
+	margin-bottom: 2em;
+}
+.left-bar {
+	width: 25em;
+	height: auto;
+	margin-right: 1.5em;
+}
+.right-bar {
+	width: 40em;
+	min-height: 10em;
+	background-color: var(--surface-color);
+	border-radius: var(--border-radius);
+	padding: 1em;
+}
+.guild-card {
+	width: 100%;
+	min-height: 10em;
+	background-color: var(--surface-color);
+	border-radius: var(--border-radius);
+	padding: 1em;
+	display: grid;
+}
+.guild-info {
+	width: 100%;
+	min-height: 10em;
+	background-color: var(--surface-color);
+	border-radius: var(--border-radius);
+	margin-top: 1.5em;
+	display: grid;
+	padding: 1em;
+}
+.guild-perks {
+	width: 100%;
+	min-height: 10em;
+	background-color: var(--surface-color);
+	border-radius: var(--border-radius);
+	margin-top: 1.5em;
+	display: grid;
+	padding: 1em;
+}
+.guild-avatar {
+	width: 7.5em;
+	height: 7.5em;
+	margin: auto;
+	border-radius: var(--border-radius);
+}
+.guild-name {
+	margin-top: 1em;
+	font-size: 1.3em;
+	font-weight: bold;
+	text-align: center;
+}
+.guild-tag {
+	font-size: 1.1em;
+	font-weight: bold;
+	text-align: center;
+}
+.guild-web-info {
+	width: 100%;
+	min-height: 2em;
+	background-color: var(--background-color);
+	border-radius: var(--border-radius);
+	margin-top: 1em;
+	padding: 1em;
+}
+.guild-web-info p {
+	margin-bottom: 0.3em;
+}
+.guild-web-info img {
+	max-width: 100%;
+	height: auto;
+}
+.members-title {
+	font-size: 1.3em;
+	font-weight: bold;
+}
+td, th {
+    vertical-align: middle;
+    padding: 0.5em;
+    border-bottom: 1px solid #97A9B4;
+}
+th {
+	font-weight: bold;
+}
+table {
+  table-layout: auto;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1em;
+}
+.user-head-first {
+	height: 1.8em;
+	width: 1.8em;
+}
+.username {
+	font-weight: bold;
+	font-size: 1.1em;
+	margin-left: 0.5em;
+}
+.guild-level-title {
+	font-size: 1.3em;
+	font-weight: bold;
+	text-align: center;
+}
+.guild-level {
+	width: 100%;
+	height: 0.7em;
+	background-color: var(--background-color);
+	border-radius: 0.5em;
+	position: relative;
+	margin-bottom: 1em;
+	margin-top: 0.5em;
+}
+.guild-level-progress {
+	width: 59%;
+	height: 100%;
+	background-color: var(--green-color);
+	border-radius: 0.5em;
+}
+.xp-tooltip {
+	opacity: 0;
+	z-index: 1;
+	position: absolute;
+	bottom: 120%;
+	left: 20%;
+	background-color: black;
+	padding: 0.5em;
+	border-radius: var(--border-radius);
+	font-weight: bold;
+	transition: all.2s ease;
+}
+.xp-tooltip::after {
+	content: " ";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: black transparent transparent transparent;
+}
+.guild-level:hover .xp-tooltip {
+	transition: all.2s ease;
+	opacity: 1;
+}
+.info-name {
+	color: var(--text-color);
+	font-weight: bold;
+}
+.info-content {
+	color: var(--green-color);
+}
+.perks-title {
+	font-size: 1.3em;
+	font-weight: bold;
+	text-align: center;
+}

@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>VimeArchive - {{username}}</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="/static/css/style.css" id='style-href'>
+		<link rel="stylesheet" href="/static/css/player_style.css" id='style-href'>
+		<link href="/static/svg/logo.svg" rel="shortcut icon" type="image/x-icon" />
+		<script>username = '{{username}}';</script>
+		<!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
+	</head>
+	<body>
+		<div class="header" id='header'></div>
+		<div id="top" style="visibility: hidden;">
+			<div class="player-card" id="player-card">
+				<div class="card-content">
+					<div class="user-head">
+						<img class="user-head-first" id="user-head-first">
+						<div class="user-head-second" id="user-head-second"></div>
+					</div>
+					<div class="card-title">
+						<span id="card-title-top"></span>
+						<span id="player-status" class="player-status">
+						</span>
+						<a id="card-title-guild" class="card-title-guild" style="visibility: hidden;"><img id="player-guild-avatar"><span id="player-guild-name"></span></a>
+					</div>
+					<div class="card-title-top-right">
+						<h6 class="card-title-id" id="card-title-id"></h6>
+						<div class="friends-button"><img class="friends-ico" src="/static/png/friends.png">
+							<div class="friends-hover">
+								<h5 id="friends-title"></h5>
+								<div class="friends-place" id="friends-hover"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card-bottom">
+					<span class="xp-level" id="xp-level">
+					<span class="xp-percent"></span></span>
+					<div class="xp-progress-bg">
+						<span class="xp-tooltip" id="xp-tooltip"></span>
+					</div>
+					<div class="xp-progress" id="xp-progress"></div>
+				</div>
+			</div>
+		</div>
+		<div class='select-hint' id='select-hint' style="visibility: hidden;">
+			<span>Выбери период</span>
+			<img src="/static/png/arrow.png">
+		</div>
+		<div class="data-place" id="data-place">
+			<div class="stats-div" id='stats-div'>
+				<div class="stats-div-header">
+					<div class="stats-header-body">
+						<span>Статистика</span>
+						<div class='stats-header-button hover-slide' id='header-main-button' data-tag='global' style='border-radius: 0.5em 0px 0px 0.5em;'>Основная</div>
+						<div class='stats-header-button hover-slide' id='header-season-button' data-tag='season' style='border-radius: 0px 0.5em 0.5em 0px;'>Сезонная</div>
+						<div class="date-picker-place" id="date-picker-place">
+							<input type="text" name="daterange" id="daterange"/>
+						</div>
+					</div>
+				</div>
+				<div class="stats-place" id='stats-place'></div>
+			</div>
+		</div>
+		<div class='not-found' id="not-found" style="visibility: hidden;">
+			<h1>404</h1>
+			<h3>Игрок не найден</h3>
+			<img src="/static/png/not-found.png" class="not-found-img">
+		</div>
+		<div class='not-found' id="black-list" style="visibility: hidden;">
+			<h1 style="color: black;">Blacklist</h1>
+			<h3>Кажется этот игрок что-то натворил...</h3>
+			<img src="/static/png/block-user.png" class="not-found-img">
+		</div>
+		<div class='loading' id='loading' style="visibility: hidden;">
+			<div class='loading-place'>
+				<span>Загрузка...</span>
+				<div class='loading-bar'>
+					<div class='loading-bar-progress'></div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="/static/js/utils.js"></script>
+	<script type="text/javascript" src="/static/js/player.js"></script>
+	<script type="text/javascript" src="/static/js/test_notify.js"></script>
+	<script type="text/javascript" src="/static/js/update.js"></script>
+	<script> 
+	    $(function(){
+	      $("#header").load("/static/html/header.html"); 
+	    });
+    </script>
+</html>

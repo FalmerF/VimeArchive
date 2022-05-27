@@ -1,0 +1,76 @@
+.discord-logo {
+	width: 30px;
+	height: 30px;
+	position: fixed;
+	right: 1em;
+	bottom: 3em;
+	transition: all.3s ease;
+}
+.discord-logo:hover {
+	transition: all.3s ease;
+	filter: drop-shadow(0 0 0.5em #5865F2);
+}
+.site-info {
+	position: absolute;
+	left: 10%;
+	top: 90%;
+	width: 80%;
+	padding: 1em;
+	padding-bottom: 5em;
+	background-color: var(--surface-color);
+	border-radius: var(--border-radius);
+	text-align: center;
+}
+.site-info h3 {
+	font-size: 1.3em;
+}
+.site-info span {
+	margin-left: 2em;
+}
+.site-info div {
+	text-align: left;
+}
+br {
+   display: block;
+   margin: 10px 0;
+   line-height: 22px;
+   content: " ";
+}
+.center-div {
+	width: fit-content;
+	margin: auto;
+	height: 3em;
+	margin-top: 17em;
+}
+.center-div img{
+	float: left;
+	width: 40px;
+	height: 40px;
+	margin-right: 0.5em;
+}
+.center-div input {
+	float: left;
+	border-radius: 0.2em;
+	background-color: #2C2F33;
+	color: var(--text-color);
+	border: none;
+	padding: 0.5em;
+	font-family: var(--bs-body-font-family);
+	width: 20em;
+	height: 2em;
+	font-size: 1.3em;
+}
+
+@keyframes logo-tap {
+  from {
+    margin-top: 0em;
+  }
+
+  50% {
+  	margin-top: 0.5em;
+  }
+
+  to {
+    margin-top: 0em;
+  }
+}

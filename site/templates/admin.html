@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>VimeArchive - Админ Панель</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="static/css/style.css">
+		<link rel="stylesheet" href="static/css/admin_style.css">
+		<link href="/static/svg/logo.svg" rel="shortcut icon" type="image/x-icon" />
+	</head>
+	<body>
+		<div class="header" id='header'></div>
+		<div class='admin-panel'>
+			<h3>Посетители</h3>
+			<br>
+			<span>Уникальных посетителей: {{unique_visitors}}</span>
+			<div class="graph" id="graph-v"></div>
+			<br>
+			<br>
+			<h3>API</h3>
+			<div class="graph" id="graph-api">
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="/static/js/utils.js"></script>
+	<script type="text/javascript" src="/static/js/test_notify.js"></script>
+	<script type="text/javascript" src="/static/js/update.js"></script>
+	<script> 
+	    $(function(){
+	      $("#header").load("/static/html/header.html"); 
+	    });
+	    not_formated_data = JSON.parse("{{visitors}}".replaceAll('&#39;', '"'));
+	    data = json_to_map(not_formated_data);
+	    all_requests = data.get('v_all');
+	    draph = document.getElementById("graph-v");
+	    data.forEach(async (value, name) => {
+			draph.append(create_column(value, name.replace('v_', ''), all_requests));
+		});
+
+	    not_formated_data = JSON.parse("{{api}}".replaceAll('&#39;', '"'));
+	    data = json_to_map(not_formated_data);
+	    all_requests = data.get('a_all');
+	    draph = document.getElementById("graph-api");
+	    data.forEach(async (value, name) => {
+			draph.append(create_column(value, name.replace('a_', ''), all_requests));
+		});
+
+		function create_column(value, name, maximum) {
+			column = document.createElement('div');
+			column.className = 'column';
+			column.style.height = ((value/maximum)*100)+'%';
+			column.innerHTML = value;
+
+			column_title = document.createElement('div')
+			column_title.className = 'column-title';
+			column_title.innerHTML = name;
+
+			span = document.createElement('span');
+			span.innerHTML = value;
+
+			column.append(column_title);
+			// column.append(span);
+			return column;
+		}
+    </script>
+</html>

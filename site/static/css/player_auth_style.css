@@ -1,0 +1,21 @@
+.auth-div {
+	background-color: var(--surface-color);
+	border-radius: var(--border-radius);
+	width: 30em;
+	margin: auto;
+	margin-top: 10em;
+	padding: 1em;
+}
+.auth-div h3 {
+	text-align: center;
+}
+.key-input {
+	width: 100%;
+	border-radius: 0.2em;
+	background-color: var(--background-color);
+	color: var(--text-color);
+	border: none;
+	padding: 0.5em;
+	font-family: var(--bs-body-font-family);
+	margin-top: 1em;
+}

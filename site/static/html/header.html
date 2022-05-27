@@ -1,0 +1,47 @@
+<a href="/"><img src="/static/svg/banner.svg" class="banner-img"></a>
+<input type="text" name="nick" placeholder="Поиск игрока..." onchange="document.location.href='/player/'+this.value"/>
+<a href="/leaderboards">
+	<div class="header-button" title='Ежедневный топ'>
+		<img src="/static/png/cup.png" class='header-cup'>
+	</div>
+</a>
+<a href="/admin" style='visibility: hidden;' id='admin_button'>
+	<div class="header-button" title='Админ Панель'>
+		<img src="/static/png/admin.png" class='header-admin'>
+	</div>
+</a>
+<a href="/auth" style='visibility: hidden; float: right;' id='profile_button'>
+	<div class="header-button" title='Профиль'>
+		<img src="//skin.vimeworld.ru/helm/3d/FalmerF.png" class='header-head' id='player-head'>
+	</div>
+</a>
+<a href="/auth" style='visibility: hidden; float: right;' id='auth_button'>
+	<div class="header-button" title='Авторизация'>
+		<img src="/static/png/key.png" class='header-key'>
+	</div>
+</a>
+<script type="text/javascript">
+	init();
+	async function init() {
+		cookie = get_cookie();
+		if(cookie.get('auth_token') != '' && cookie.get('auth_token') != null) {
+			response = await fetch("/api/player/"+cookie.get('auth_token'));
+			user = json_to_map(await response.json());
+
+			response = await fetch("https://api.vimeworld.ru/user/"+user.get('id'));
+			data = json_to_map(await response.json());
+
+			document.getElementById('profile_button').href ='/player/'+data.get('0').get('username');
+			document.getElementById('profile_button').style.visibility = 'unset';
+
+			document.getElementById('player-head').src = '//skin.vimeworld.ru/helm/3d/'+data.get('0').get('username')+'.png';
+
+			if(user.get('is_admin') == 'true')
+				document.getElementById('admin_button').style.visibility = 'unset';
+		}
+		else {
+			document.getElementById('auth_button').style.visibility = 'unset';
+			document.getElementById('profile_button').style.position = 'absolute';
+		}
+	}
+</script>
