@@ -16,8 +16,8 @@ from vime import Vime, VimeError
 test_mode = False
 
 #region Tokens
-vime_token = 'DYMB48EsIIchBSDYBl8I2pbXueywr0a'
-vime_test_token = 'DLNFXPcRvremN7VznkkVtl9wC54nOTd'
+vime_token = ''
+vime_test_token = ''
 #endregion
 
 if test_mode: 
