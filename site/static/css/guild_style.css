@@ -7,16 +7,44 @@
 	margin-bottom: 2em;
 }
 .left-bar {
+	opacity: 0;
 	width: 25em;
 	height: auto;
 	margin-right: 1.5em;
+	animation: 0.5s left-bar-in;
+	animation-delay: 0.5s;
+	animation-fill-mode: forwards;
+}
+@keyframes left-bar-in {
+	from {
+		transform: translateX(-5em);
+		opacity: 0;
+	}
+	to {
+		transform: translateX(0em);
+		opacity: 1;
+	}
 }
 .right-bar {
+	opacity: 0;
 	width: 40em;
 	min-height: 10em;
 	background-color: var(--surface-color);
 	border-radius: var(--border-radius);
 	padding: 1em;
+	animation: 0.5s right-bar-in;
+	animation-delay: 0.5s;
+	animation-fill-mode: forwards;
+}
+@keyframes right-bar-in {
+	from {
+		transform: translateX(5em);
+		opacity: 0;
+	}
+	to {
+		transform: translateX(0em);
+		opacity: 1;
+	}
 }
 .guild-card {
 	width: 100%;
@@ -65,9 +93,10 @@
 	width: 100%;
 	min-height: 2em;
 	background-color: var(--background-color);
-	border-radius: var(--border-radius);
+	border-radius: 0.4em;
 	margin-top: 1em;
 	padding: 1em;
+	border-left: solid var(--primary-color) 4px;
 }
 .guild-web-info p {
 	margin-bottom: 0.3em;
@@ -83,10 +112,19 @@
 td, th {
     vertical-align: middle;
     padding: 0.5em;
-    border-bottom: 1px solid #97A9B4;
+}
+td:first-child, th:first-child {
+	padding-left: 1em;
 }
 th {
 	font-weight: bold;
+}
+tr {
+	transition: all.3s ease;
+}
+tr:hover {
+	transition: all.3s ease;
+	background-color: var(--surface-h-color);
 }
 table {
   table-layout: auto;

@@ -1,5 +1,5 @@
 import os
-import DataBase
+import data_base
 import ast
 from datetime import datetime, date, timedelta
 
@@ -10,7 +10,7 @@ def get_xp_for_lvl(lvl: int):
 	return 8000+lvl*2000
 
 def get_player_stats(playerid: int, date: str):
-	DB = DataBase.DataBase(date, False)
+	DB = data_base.DataBase(date, False)
 	if DB.valid is False:
 		return None
 	data = DB.get('actions', '*', f'user_id={playerid}', 'all')
@@ -91,7 +91,7 @@ def get_player_stats_range(playerid: int, start_date, end_date):
 	return stats
 
 def get_player_actions(playerid: int, date: str):
-	DB = DataBase.DataBase(date, False)
+	DB = data_base.DataBase(date, False)
 	if DB.valid is False:
 		return None
 	data = DB.get('actions', '*', f'user_id={playerid}', 'all')

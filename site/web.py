@@ -7,10 +7,12 @@ import __main__
 import requests
 import random
 import string
+import asyncio
+import ast
 
 sys.path.insert(1, os.path.abspath('..'))
 sys.path.insert(1, os.path.abspath('../vime_api'))
-import DataBase
+import data_base
 import vime
 import utils
 from utils import cls
@@ -22,15 +24,11 @@ app=Flask(__name__)
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
-#region secret_key
-admin_key = 'KMHEGQqU4fTxJNS2PZun2jXee5tr4VW26cmkt97UkjkVHJ5gGHRdRaGqK8RfAc8zAyfGaT2sWUJc9SdMAwMbU9Qwyn3DKgNvvJWQ'
-app.config['SECRET_KEY'] = 'eYmud3YZP4Ms97d7'
-#endregion
-
 vime = Vime()
 black_list = utils.get_black_list('../black_list.txt')
 locale = utils.get_locale('../locale.txt')
 lb_data = {}
+last_status = []
 
 analytics = {'v': 0, 'a': 0, 'v_main': 0, 'v_player': 0, 'v_lb': 0}
 unique_visitors = []
@@ -51,7 +49,7 @@ def admin():
 	check_visitor((request.environ['HTTP_X_FORWARDED_FOR']) if 'HTTP_X_FORWARDED_FOR' in request.environ else (None))
 	token = request.cookies.get('auth_token')
 	user = user_manager.get_user_by_token(token)
-	if user != None and user.is_admin:
+	if user != None and user.get_param('is_admin') == True:
 		v_data = {}
 		api_data = {}
 		for d in analytics:
@@ -72,12 +70,11 @@ def player_auth():
 
 @app.route('/api/auth/player/<string:key>')
 def api_auth_player(key):
-	users_DB = DataBase.DataBase('', file_name='users.db')
 	token = vime.get_token(key);
 	if(token.valid == False or token.owner == None):
 		return {'error': 'Токен не действительный.'}
 
-	user = user_manager.get_or_create_user(token.owner.id)
+	user = user_manager.get_or_create_user(token.owner.username, token.owner.id)
 	return {'token': user.token}
 
 @app.route('/api/player/<string:token>')
@@ -86,7 +83,61 @@ def api_player(token):
 	if user == None:
 		return {'error': 'Не удалось авторизоваться.'}
 	else:
-		return {'id': user.id, 'is_admin': user.is_admin}
+		return {'id': user.id, 'is_admin': user.get_param('is_admin')}
+
+@app.route('/api/player/info/<int:id>')
+def api_player_info(id):
+	user = user_manager.get_user_by_id(id)
+	if user == None:
+		return {'error': 'No data'}
+	else:
+		return {'username': user.name, 'info': user.base_data}
+
+@app.route('/api/player/status', methods=['POST'])
+def api_player_status():
+	if not request.is_json:
+		return {'result': 'Not json'}
+
+	request_data = request.json
+
+	if not 'token' in request_data:
+		return {'result': 'Bad token'}
+	elif not 'user_id' in request_data:
+		return {'result': 'Need user id'}
+	elif not 'status' in request_data or len(request_data['status']) > 150:
+		return {'result': 'Неверный формат статуса'}
+
+	token = request_data['token']
+	status = request_data['status']
+	user_id = request_data['user_id']
+
+	user = user_manager.get_user_by_token(token)
+	if user is None:
+		return {'result': 'Bad token'}
+	target_user = user_manager.get_user_by_id(user_id)
+	if target_user is None:
+		return {'result': 'Bad user id'}
+	elif not user.get_param('is_admin') and target_user != user:
+		return {'result': 'Вы можете менять только свой статус!'}
+	user_manager.set_user_data(target_user, 'status', status)
+
+	if target_user.id not in last_status:
+		last_status.append(target_user.id)
+		if len(last_status) > 50:
+			last_status.pop(0)
+
+	return {'result': 'ok'}
+
+@app.route('/api/player/status/last')
+def api_player_status_last():
+	status_json = {}
+	i = len(last_status)-1
+	while i >= 0:
+		user = user_manager.get_user_by_id(last_status[i])
+		if user.base_data.get('status') != '':
+			status_json[i] = {'id': last_status[i], 'status': user.base_data.get('status')}
+		i -= 1
+	return status_json
 
 @app.route('/') 
 def index():
@@ -173,17 +224,21 @@ def api_update():
 • Мы переехали на новый хост! Теперь не нужно использовать VPN!
 '''}
 
-@app.route('/api/locale') 
-def api_locale():
+@app.route('/api/locale/<string:locales>') 
+def api_locale(locales):
 	trigger_analytics('a_locale')
-	return locale
+	locale_arr = locales.split(',')
+	locale_result = {}
+	for loc in locale_arr:
+		locale_result[loc] = locale[loc]
+	return locale_result
 
 @app.route('/api/black_list') 
 def api_black_list():
 	trigger_analytics('a_black_list')
 	return {'ids': black_list}
 
-def update_cycle():
+async def update_cycle():
 	global analytics
 	global unique_visitors
 	global lb_data
@@ -195,17 +250,17 @@ def update_cycle():
 				date = datetime.now()
 				analytics = {'v': 0, 'a': 0, 'v_main': 0, 'v_player': 0, 'v_lb': 0}
 				unique_visitors = []
-			DB = DataBase.DataBase('', file_name='../user_lb.db')
-			lb_data['xp'] = make_top_list(DB, 'xp')
-			lb_data['online'] = make_top_list(DB, 'online')
-			lb_data['games'] = make_top_list(DB, 'games')
-			lb_data['wins'] = make_top_list(DB, 'wins')
+			DB = data_base.DataBase('', file_name='../user_lb.db')
+			lb_data['xp'] = await make_top_list(DB, 'xp')
+			lb_data['online'] = await make_top_list(DB, 'online')
+			lb_data['games'] = await make_top_list(DB, 'games')
+			lb_data['wins'] = await make_top_list(DB, 'wins')
 			time.sleep(600)
 		except:
 			time.sleep(10)
 
-def make_top_list(DB, table):
-	data = DB.get(table+'_top', '*', type='all')
+async def make_top_list(DB, table):
+	data = await DB.get_async(table+'_top', '*', type='all')
 	top_list = {}
 	num = 0
 	for d in data:
@@ -213,37 +268,34 @@ def make_top_list(DB, table):
 		num += 1
 	return top_list
 
-threading.Thread(target=update_cycle).start()
+def run_update_async_task():
+    asyncio.run(update_cycle())
+
+threading.Thread(target=run_update_async_task).start()
 
 class UserManager:
 	def __init__(self):
-		self.users_to_add = []
 		self.users = {}
-		users_DB = DataBase.DataBase('', file_name='../users.db')
-		data = users_DB.get('users', '*', type='all')
+		asyncio.run(self.load_users())
+
+	async def load_users(self):
+		self.users_DB = data_base.DataBase('', file_name='../users.db')
+		await asyncio.sleep(0.1)
+		data = await self.users_DB.get_async('users', '*', type='all')
 		for user in data:
-			u = User(user[0], user[1], user[2])
-			self.users[user[0]] = u
-		threading.Thread(target=self.add_cycle).start()
+			u = User(user[0], user[1], user[2], ast.literal_eval(user[3]))
+			self.users[user[1]] = u
 
-	def add_cycle(self):
-		users_DB = DataBase.DataBase('', file_name='../users.db')
-		while True:
-			while len(self.users_to_add) > 0:
-				user = self.users_to_add.pop()
-				users_DB.insert('users', f'{user[1]}, "{user[2]}", {user[3]}')
-				self.users[user[1]] = user[0]
-			time.sleep(1)
-
-	def new_user(self, id, token, is_admin=False):
-		user = User(id, token, is_admin)
-		self.users_to_add.append([user, id, token, is_admin])
+	def new_user(self, name, id, token, base_data={}):
+		user = User(name, id, token, base_data)
+		self.users[id] = user
+		self.users_DB.insert_async('users', f'"{name}", {id}, "{token}", "{base_data}"')
 		return user
 
-	def get_or_create_user(self, id):
+	def get_or_create_user(self, name, id):
 		if id not in self.users:
 			auth_token = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(32))
-			return self.new_user(id, auth_token)
+			return self.new_user(name, id, auth_token)
 		else:
 			return self.users[id]
 
@@ -253,11 +305,27 @@ class UserManager:
 				return self.users[id]
 		return None
 
+	def set_user_data(self, user, param, value):
+		value = value.replace('"', '')
+		user.base_data[param] = value
+		self.users_DB.update_async('users', f'base_data="{str(user.base_data)}"', f'id={user.id}')
+
+	def get_user_by_id(self, id):
+		if id in self.users:
+			return self.users[id]
+		return None
+
 class User:
-	def __init__(self, id: int, token: str, is_admin: bool):
+	def __init__(self, name: str, id: int, token: str, base_data={}):
+		self.name = name
 		self.id = id
 		self.token = token
-		self.is_admin = is_admin
+		self.base_data = base_data
+
+	def get_param(self, param):
+		if param in self.base_data:
+			return self.base_data[param]
+		return None
 
 user_manager = UserManager()
 

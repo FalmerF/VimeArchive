@@ -1,7 +1,7 @@
 import discord
 import time
 import requests
-import DataBase
+import data_base
 import os
 import sys
 import threading
@@ -94,7 +94,7 @@ def update():
 	global players_lb
 
 	players_lb = {}
-	DB = DataBase.DataBase('', file_name='user_lb.db')
+	DB = data_base.DataBase('', file_name='user_lb.db')
 
 	i = 10
 	while True:

@@ -19,7 +19,7 @@ async function init() {
 
 	document.getElementById('guild-avatar').src = guild.get('avatar_url');
 	document.getElementById('guild-name').innerHTML = guild.get('name');
-	document.getElementById('guild-tag').innerHTML = "<"+guild.get('tag')+">";
+	document.getElementById('guild-tag').innerHTML = guild.get('tag');
 	document.getElementById('guild-name').style.color = "var(--mc-color-"+guild.get('color').replace('&', '')+")";
 	document.getElementById('guild-tag').style.color = "var(--mc-color-"+guild.get('color').replace('&', '')+")";
 	document.getElementById('guild-web-info').innerHTML = web_info;

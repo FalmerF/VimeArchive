@@ -17,6 +17,7 @@
 
 	--background-color: #181818;
 	--surface-color: #212121;
+	--surface-h-color: #2F2F2F;
 	--primary-color: #6a52da;
 	--text-color: #dddddd;
 	--input-background-color: #181818;
@@ -53,38 +54,74 @@ html, body {
     max-width: 100%;
     overflow-x: hidden;
 }
-input{
-	color: var(--text-color);
+* {
+	transition: all.3s ease;
 }
-input:focus {
+*:hover {
+	transition: all.3s ease;
+}
+input, textarea, .default-input {
+	color: var(--text-color);
+	outline-style: solid;
+	outline-color: #5865F200;
+	outline-width: 3px;
+	transition: all.5s ease;
+}
+input:focus, textarea:focus, .default-input:focus {
+	transition: all.5s ease;
 	outline-style: solid;
 	outline-color: #5865F2;
 	outline-width: 3px;
+}
+textarea {
+	resize: none;
+}
+textarea::-webkit-scrollbar, div::-webkit-scrollbar {
+    width: 5px;
+    margin-left: 10px;
+}
+
+textarea::-webkit-scrollbar-track, div::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+textarea::-webkit-scrollbar-thumb, div::-webkit-scrollbar-thumb  {
+    border-radius: 10px;
+    background-color: #57F287;
 }
 a {
 	text-decoration: none;
 }
 .header {
+	z-index: 5;
 	width: 100%;
 	height: 4em;
 	background-color: var(--surface-color);
 	padding: 0.7em;
 	padding-left: 1em;
 	padding-right: 2em;
-	animation: header-in 0.5s;
 }
 @keyframes header-in {
     from { opacity: 0; margin-top: -4em;}
     to   { opacity: 1;}
 }
 .header input {
-	border-radius: 0.2em;
-	background-color: var(--background-color);
+	width: 12em;
+	border-radius: 0.5em;
 	color: var(--text-color);
 	border: none;
 	padding: 0.5em;
 	font-family: var(--bs-body-font-family);
 	float: left;
+	background: url(/static/svg/search.svg) no-repeat 0.4em;
+	background-size: 1.5em;
+	padding-left: 2.2em;
+	background-color: var(--background-color);
+	transition: all.5s ease;
+}
+.header input:focus {
+	transition: all.5s ease;
+	width: 15em;
 }
 .banner-img{
 	width: 214px;
@@ -183,30 +220,59 @@ a {
 .close-img img{
 	width: 15px;
 	height: 15px;
-	transition: all.3s ease;
 	cursor: pointer;
 }
 .close-img img:hover {
 	filter: invert(48%) sepia(13%) saturate(3207%) hue-rotate(340deg) contrast(80%);
-	transition: all.3s ease;
 }
 .header a {
 	float: left;
 }
 .header-button {
-	width: 3em;
-	height: 3em;
 	margin-left: 1.5em;
 	margin-top: -0.25em;
+}
+.default-button {
+	width: 3em;
+	height: 3em;
 	border-radius: 0.3em;
 	background: var(--surface-color);
 	border-bottom: 0px solid var(--primary-color);
-	transition: all.3s ease;
+	cursor: pointer;
 }
-.header-button:hover {
-	transition: all.3s ease;
+.default-button:hover {
 	background: var(--background-color);
 	border-bottom: 6px solid var(--primary-color);
+}
+.default-button img {
+	animation: blob-out 0.2s;
+	transform: scale(0.9, 0.9);
+}
+.default-button:hover > img {
+	animation: blob-in 0.2s;
+	transform: scale(1, 1);
+}
+@keyframes blob-in {
+  	0% {
+      transform: scale(0.9, 0.9);
+    }
+    50% {
+      transform: scale(0.8, 1.2);
+    }
+    100% {
+      transform: scale(1, 1);
+	}
+}
+@keyframes blob-out {
+  	0% {
+      transform: scale(1, 1);
+    }
+    50% {
+      transform: scale(1.2, 0.8);
+    }
+    100% {
+      transform: scale(0.9, 0.9);
+	}
 }
 .header-cup {
 	margin-left: 0.7em;
@@ -223,10 +289,10 @@ a {
 	filter: invert(48%) sepia(13%) saturate(3207%) hue-rotate(10deg) contrast(150%) brightness(1.5);
 }
 .header-admin {
-	margin-left: 0.1em;
-	margin-top: 0.1em;
-	width: 45px;
-	height: 45px;
+	margin-left: 0.4em;
+	margin-top: 0.4em;
+	width: 35px;
+	height: 35px;
 	opacity: 0.5;
 	float: left;
 	filter: contrast(0%) brightness(1.9);
@@ -235,7 +301,7 @@ a {
 .header-button:hover .header-admin {
 	transition: all.5s ease;
 	opacity: 1;
-	filter: contrast(100%);
+	filter: invert(48%) sepia(13%) saturate(2500%) hue-rotate(330deg) contrast(100%) brightness(1.5);
 }
 .header-key {
 	margin-left: 0.6em;
@@ -411,17 +477,4 @@ a {
 	to {
 		right: -20em;
 	}
-}
-.discord-widget {
-	padding: 4em;
-	padding-left: 3em;
-	padding-right: 3em;
-	position: fixed;
-	right: -22em;
-	top: 3em;
-	transition: all.3s ease;
-}
-.discord-widget:hover {
-	transition: all.3s ease;
-	right: 0em;
 }

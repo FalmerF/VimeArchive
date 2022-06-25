@@ -24,59 +24,17 @@ init();
 async function init() {
 	response = await fetch("https://api.vimeworld.ru/leaderboard/list");
 	var lb_list = json_to_map(await response.json());
-	response = await fetch('/api/locale');
+	response = await fetch('/api/locale/game_stats,lb_name,games,lb_list');
     locale = json_to_map(await response.json());
-    locale.set('top_title', new Map());
-
-    user_locale = new Map();
-    user_locale.set('level', 'Уровень');
-    user_locale.set('online', 'Онлайн');
-    user_locale.set('wins', 'Побед');
-    user_locale.set('xp', 'Опыта');
-    user_locale.set('games', 'Игр');
-
-    guild_locale = new Map();
-    guild_locale.set('level', 'Уровень');
-    guild_locale.set('total_coins', 'Коинов');
-    guild_locale.set('totalCoins', 'Коинов');
-
-    locale.get('game_stats').set('user', user_locale);
-    locale.get('game_stats').set('guild', guild_locale);
-    locale.get('game_stats').get('murder').set('total_wins', 'Всего побед');
-    locale.get('game_stats').get('sheep').set('tamed_sheep', 'Перетащено овец');
 
 	category_place = document.getElementById('category-place');
 
-	sorted_lb_list = new Map();
-
-	lb_list.forEach(async (value, id) => {
-		if(value.get('season') == 'monthly') {
-			type = value.get('type').replace('_monthly', '');
-			sorted_lb_list.get(type).set('season', value.get('sort'));
-		}
-		else if(value.get('season') == 'manual') {
-			type = value.get('type').replace('_season', '');
-			sorted_lb_list.get(type).set('season', value.get('sort'));
-		}
-		else {
-			type = value.get('type');
-			sorted_lb_list.set(type, new Map());
-			sorted_lb_list.get(type).set('main', value.get('sort'));
-		}
-		locale.get('top_title').set(value.get('type'), value.get('description'))
-	});
-	locale.get('top_title').set('user_daily', 'Общий топ игроков (за день)');
-
-	user_daily = new Map();
-	user_daily.set('0', 'xp')
-	user_daily.set('1', 'online')
-	user_daily.set('2', 'games')
-	user_daily.set('3', 'wins')
-	sorted_lb_list.get('user').set('daily', user_daily);
-
-	sorted_lb_list.forEach(async (value, name) => {
+	var i = 0;
+	locale.get('lb_list').forEach(async (value, name) => {
 		category = document.createElement('div');
 		category.className = 'lb-select-button';
+		category.style.cssText = '--i: '+i;
+		i++;
 		if(name == 'user')
 			category.innerHTML = 'Игроки';
 		else if(name == 'guild')
@@ -246,7 +204,7 @@ function on_select_top() {
 }
 
 async function load_top(top_name, game_name) {
-	document.getElementById('table-title').innerHTML = locale.get('top_title').get(top_name.split('/')[0]);
+	document.getElementById('table-title').innerHTML = locale.get('lb_name').get(top_name.split('/')[0]);
 	if(top_name.startsWith('user_daily/')) {
 		top_name = top_name.replace('user_daily/', '');
 		table_body = document.getElementById('table-body');
@@ -427,9 +385,12 @@ function load_100_users() {
 	if(players == null || table_body == null)
 		return;
     players_tmp = get_sliced_map();
+    var t = 0;
 	players_tmp.forEach(async (data, num) => {
 		i = parseInt(num, 10)+1;
 		row = create_user_row(i, data);
+		row.style.cssText = "--i: "+t;
+		t++;
 		table_body.append(row);
 	});
 }

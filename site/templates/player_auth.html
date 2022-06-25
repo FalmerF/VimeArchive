@@ -44,7 +44,8 @@
 	      $("#header").load("/static/html/header.html"); 
 	    });
 	    document.getElementById('key-input').addEventListener('change', async function() {
-	    	response = await fetch("/api/auth/player/"+this.value);
+	    	api_key = this.value.replace('https://api.vime.world/web/token/', '');
+	    	response = await fetch("/api/auth/player/"+api_key);
 			var data = json_to_map(await response.json());
 			if(data.get('error') != null) {
 				send_error_notify(data.get('error'));

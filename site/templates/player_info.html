@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>VimeArchive - {{username}}</title>
+		<title>{{username}} - VimeArchive</title>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -11,6 +11,7 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0" />
 		<link rel="stylesheet" href="/static/css/style.css" id='style-href'>
 		<link rel="stylesheet" href="/static/css/player_style.css" id='style-href'>
 		<link href="/static/svg/logo.svg" rel="shortcut icon" type="image/x-icon" />
@@ -18,66 +19,113 @@
 		<!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
 	</head>
 	<body>
+
 		<div class="header" id='header'></div>
-		<div id="top" style="visibility: hidden;">
-			<div class="player-card" id="player-card">
-				<div class="card-content">
-					<div class="user-head">
-						<img class="user-head-first" id="user-head-first">
-						<div class="user-head-second" id="user-head-second"></div>
+		<div id="page-content">
+			<div id="top" style="visibility: hidden;">
+				<div class="player-card" id="player-card">
+					<!-- <div class="player-status-div" id="player-status-div"><div>This is test status to view functional. Это тестовый статус для просмотра фунционала. This is test status to view functional. Это тестовый статус для просмотра фунционала.</div></div> -->
+					<div class="card-content">
+						<div class="user-head">
+							<img class="user-head-first" id="user-head-first">
+							<div class="user-head-second" id="user-head-second"></div>
+						</div>
+						<div class="card-title">
+							<span id="card-title-top" onclick="copy_text(username)"></span>
+							<span id="player-status" class="player-status">
+							</span>
+							<a id="card-title-guild" class="card-title-guild" style="visibility: hidden;"><img id="player-guild-avatar"><span id="player-guild-name"></span></a>
+						</div>
+						<div class="card-title-top-right">
+							<h6 class="card-title-id" id="card-title-id" onclick="copy_text(user_id)"></h6>
+						</div>
 					</div>
-					<div class="card-title">
-						<span id="card-title-top"></span>
-						<span id="player-status" class="player-status">
-						</span>
-						<a id="card-title-guild" class="card-title-guild" style="visibility: hidden;"><img id="player-guild-avatar"><span id="player-guild-name"></span></a>
+					<div class="card-bottom">
+						<span class="xp-level" id="xp-level">
+						<span class="xp-percent"></span></span>
+						<div class="xp-progress-bg">
+							<span class="xp-tooltip" id="xp-tooltip"></span>
+						</div>
+						<div class="xp-progress" id="xp-progress"></div>
 					</div>
-					<div class="card-title-top-right">
-						<h6 class="card-title-id" id="card-title-id"></h6>
-						<div class="friends-button"><img class="friends-ico" src="/static/png/friends.png">
-							<div class="friends-hover">
-								<h5 id="friends-title"></h5>
-								<div class="friends-place" id="friends-hover"></div>
+				</div>
+				<div class="player-info">
+					<div class="player-info-header" id="player-info-header"><img src="/static/svg/friends.svg" class="friends-ico"></div>
+					<div class="friends-list" id="friends-list"></div>
+				</div>
+			</div>
+			<div class="player-secondary-info">
+				<div class="player-status-div" id="player-status-div">
+					<div class="player-status-header">
+						<span>Статус</span>
+						<div class="status-button default-button" id="edit-status-button" style="transform: scale(0);">
+							<img src="/static/svg/edit.svg">
+						</div>
+						<div class="status-button default-button" id="send-status-button" style="transform: scale(0);">
+							<img src="/static/svg/send.svg">
+						</div>
+					</div>
+					<div class="player-status-content">
+						<span id="player-status-span"></span>
+						<div class="player-status-edit-div" id="player-status-edit-div">
+							<textarea placeholder="О чем вы думаете?" maxlength=150 class="default-input" id="player-status-input" onkeyup="onStatusInput(this);"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="stats-place-top" id="stats-place-top"></div>
+			</div>
+			<div class="data-place" id="data-place">
+				<div class="data-left-panel">
+					<div class="actions-div" id="actions-div">
+						<div class="match-info-div" id="match-info-div"></div>
+						<div class="actions-div-header" id="actions-div-header"><span>Активность</span></div>
+					</div>
+					<div class="lb-div" id="lb-div">
+						<div class="lb-div-header">
+							<span>Топы</span>
+						</div>
+						<div class="lb-place" id="lb-place"></div>
+					</div>
+				</div>
+				<div class="stats-div" id='stats-div'>
+					<div class="stats-div-header">
+						<div class="stats-header-body">
+							<span>Статистика</span>
+							<div class='stats-header-button hover-slide' id='header-main-button' data-tag='global' style='border-radius: 0.5em 0px 0px 0.5em;'>Основная</div>
+							<div class='stats-header-button hover-slide' id='header-season-button' data-tag='season' style='border-radius: 0px 0.5em 0.5em 0px;'>Сезонная</div>
+							<span>или</span>
+							<div class="date-picker-place" id="date-picker-place">
+								<input type="text" name="daterange" id="daterange"/>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="card-bottom">
-					<span class="xp-level" id="xp-level">
-					<span class="xp-percent"></span></span>
-					<div class="xp-progress-bg">
-						<span class="xp-tooltip" id="xp-tooltip"></span>
-					</div>
-					<div class="xp-progress" id="xp-progress"></div>
+					<div class="stats-place" id='stats-place'></div>
 				</div>
 			</div>
 		</div>
-		<div class='select-hint' id='select-hint' style="visibility: hidden;">
-			<span>Выбери период</span>
-			<img src="/static/png/arrow.png">
-		</div>
-		<div class="data-place" id="data-place">
-			<div class="stats-div" id='stats-div'>
-				<div class="stats-div-header">
-					<div class="stats-header-body">
-						<span>Статистика</span>
-						<div class='stats-header-button hover-slide' id='header-main-button' data-tag='global' style='border-radius: 0.5em 0px 0px 0.5em;'>Основная</div>
-						<div class='stats-header-button hover-slide' id='header-season-button' data-tag='season' style='border-radius: 0px 0.5em 0.5em 0px;'>Сезонная</div>
-						<div class="date-picker-place" id="date-picker-place">
-							<input type="text" name="daterange" id="daterange"/>
-						</div>
-					</div>
-				</div>
-				<div class="stats-place" id='stats-place'></div>
-			</div>
-		</div>
+
 		<div class='not-found' id="not-found" style="visibility: hidden;">
-			<h1>404</h1>
+			<div>
+				<span style="--i:1">4</span>
+				<span style="--i:3">0</span>
+				<span style="--i:5">4</span>
+			</div>
 			<h3>Игрок не найден</h3>
 			<img src="/static/png/not-found.png" class="not-found-img">
 		</div>
 		<div class='not-found' id="black-list" style="visibility: hidden;">
-			<h1 style="color: black;">Blacklist</h1>
+			<!-- <h1 style="color: black;">Blacklist</h1> -->
+			<div>
+				<span style="--i:1">B</span>
+				<span style="--i:2">L</span>
+				<span style="--i:3">A</span>
+				<span style="--i:4">C</span>
+				<span style="--i:5">K</span>
+				<span style="--i:6">L</span>
+				<span style="--i:7">I</span>
+				<span style="--i:8">S</span>
+				<span style="--i:9">T</span>
+			</div>
 			<h3>Кажется этот игрок что-то натворил...</h3>
 			<img src="/static/png/block-user.png" class="not-found-img">
 		</div>
@@ -89,6 +137,7 @@
 				</div>
 			</div>
 		</div>
+		<div class='stats-loading' id='stats-loading'></div>
 	</body>
 	<script type="text/javascript" src="/static/js/utils.js"></script>
 	<script type="text/javascript" src="/static/js/player.js"></script>

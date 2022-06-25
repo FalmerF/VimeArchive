@@ -1,22 +1,22 @@
 <a href="/"><img src="/static/svg/banner.svg" class="banner-img"></a>
 <input type="text" name="nick" placeholder="Поиск игрока..." onchange="document.location.href='/player/'+this.value"/>
 <a href="/leaderboards">
-	<div class="header-button" title='Ежедневный топ'>
+	<div class="header-button default-button" title='Ежедневный топ'>
 		<img src="/static/png/cup.png" class='header-cup'>
 	</div>
 </a>
 <a href="/admin" style='visibility: hidden;' id='admin_button'>
-	<div class="header-button" title='Админ Панель'>
-		<img src="/static/png/admin.png" class='header-admin'>
+	<div class="header-button default-button" title='Админ Панель'>
+		<img src="/static/svg/admin.svg" class='header-admin'>
 	</div>
 </a>
 <a href="/auth" style='visibility: hidden; float: right;' id='profile_button'>
-	<div class="header-button" title='Профиль'>
+	<div class="header-button default-button" title='Профиль'>
 		<img src="//skin.vimeworld.ru/helm/3d/FalmerF.png" class='header-head' id='player-head'>
 	</div>
 </a>
 <a href="/auth" style='visibility: hidden; float: right;' id='auth_button'>
-	<div class="header-button" title='Авторизация'>
+	<div class="header-button default-button" title='Авторизация'>
 		<img src="/static/png/key.png" class='header-key'>
 	</div>
 </a>
@@ -36,7 +36,7 @@
 
 			document.getElementById('player-head').src = '//skin.vimeworld.ru/helm/3d/'+data.get('0').get('username')+'.png';
 
-			if(user.get('is_admin') == 'true')
+			if(user.get('is_admin'))
 				document.getElementById('admin_button').style.visibility = 'unset';
 		}
 		else {

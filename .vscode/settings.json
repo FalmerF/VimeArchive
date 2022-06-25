@@ -1,0 +1,15 @@
+{
+    "python.analysis.extraPaths": [
+        "./vime_api"
+    ],
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [
+            {
+                "scope": "variable",
+                "settings": {
+                    "foreground": "#a0c5e7"
+                }
+            }
+        ]
+    }
+}

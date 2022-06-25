@@ -30,12 +30,24 @@
 	float: left;
 	margin-right: auto!important;
 	margin-left: auto!important;
+	animation: 0.5s lb-select-button-in;
+	animation-fill-mode: backwards;
+	animation-delay: calc(var(--i) * 0.02s);
+}
+@keyframes lb-select-button-in {
+	from {
+		transform: scaleX(0);
+	}
+	to {
+		transform: scaleX(1.0);
+	}
 }
 .lb-select-button:hover {
 	transition: all.4s ease;
 	background-color: var(--primary-color);
 }
 .hover-panel {
+	z-index: 5;
 	background-color: var(--surface-color);
 	border-radius: var(--border-radius);
 	box-shadow: 0 0 0.5em rgba(0,0,0,0.8);
@@ -45,12 +57,9 @@
 	position: absolute;
 	visibility: hidden;
 	opacity: 0;
-	transition: all.0.5s ease;
-	z-index: 5;
 }
 .lb-select-button:hover .hover-panel {
 	visibility: unset;
-	transition: all.0.5s ease;
 	opacity: 1;
 }
 .hover-panel h3 {
@@ -75,7 +84,6 @@
 	max-width: 60em;
 	min-height: 30em;
 	margin: auto;
-	/*margin-top: 1.5em;*/
 	padding: 1.5em;
 }
 .lb-place {
@@ -94,7 +102,9 @@
 td, th {
     vertical-align: middle;
     padding: 0.5em;
-    border-bottom: 1px solid #97A9B4;
+}
+td:first-child, th:first-child {
+	padding-left: 1em;
 }
 th {
 	font-weight: bold;
@@ -103,6 +113,27 @@ table {
   table-layout: auto;
   width: 100%;
   border-collapse: collapse;
+}
+tr {
+	transition: all.3s ease;
+	opacity: 0;
+	animation: 0.5s tr-in;
+	animation-delay: calc(var(--i) * 0.03s);
+	animation-fill-mode: forwards;
+}
+@keyframes tr-in {
+	from {
+		transform: translateX(-3em);
+		opacity: 0;
+	}
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+tr:hover {
+	transition: all.3s ease;
+	background-color: var(--surface-h-color);
 }
 .t-align {
 	text-align: center;

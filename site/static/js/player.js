@@ -4,15 +4,16 @@ var filter_list = new Map();
 var can_change_filter = true;
 var stat_elements_count = 0;
 var leaderboard_list = new Map();
-var lb_sort_locale = new Map();
 var load_delay = 10;
 var header_selected_button = null;
-var blocks_locale = new Map();
 var actions = null;
+var sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
+document.body.addEventListener('click', on_body_click, false);
+
 async function init() {
 	response = await fetch("https://api.vimeworld.ru/user/name/"+username);
 	var player_data = json_to_map(await response.json());
-	response = await fetch('/api/locale');
+	response = await fetch('/api/locale/ranks,games,game_stats,minecraft_colors,lb_sort,blocks');
     locale = json_to_map(await response.json());
     response = await fetch("https://api.vimeworld.ru/leaderboard/list");
 	lb_list = json_to_map(await response.json());
@@ -20,16 +21,14 @@ async function init() {
 		value.set('description', value.get('description').replace('(в этом месяце)', '(за сезон)'));
 		leaderboard_list.set(value.get('type'), value);
 	});
-	make_lb_sort_locale();
-	make_blocks_locale();
+
 	response = await fetch("/api/black_list");
 	black_list = json_to_map(await response.json()).get('ids');
 
     var player = null;
     if (player_data.get('error') != null || player_data.size == 0) {
     	document.getElementById("not-found").style.visibility = "unset";
-    	document.getElementById("select-hint").style.visibility = 'hidden';
-    	document.getElementById('stats-div').style.visibility = 'hidden';
+    	document.getElementById('page-content').style.visibility = 'hidden';
     	return;
     }
     else
@@ -37,8 +36,7 @@ async function init() {
 
     if(Array.from(black_list.values()).includes(player.get('id'))) {
     	document.getElementById("black-list").style.visibility = "unset";
-    	document.getElementById("select-hint").style.visibility = 'hidden';
-    	document.getElementById('stats-div').style.visibility = 'hidden';
+    	document.getElementById('page-content').style.visibility = 'hidden';
     	return;
     }
 
@@ -65,7 +63,7 @@ async function init() {
 	}
 
 	formated_percent = Math.round(player.get('levelPercentage')*100);
-	xp_to_level = 8000+(player.get('level')*2000);
+	xp_to_level = 8000+((player.get('level')-1)*2000);
 
 	document.getElementById("user-head-first").src = "https://skin.vimeworld.ru/head/"+username+".png";
 	document.getElementById("user-head-second").style.backgroundImage = "url('https://skin.vimeworld.ru/raw/skin/"+username+".png')";
@@ -82,11 +80,28 @@ async function init() {
 		document.getElementById("card-title-guild").style.visibility = 'unset';
 	}
 
+	response = await fetch("/api/player/info/"+player.get('id'));
+	var player_base_info = json_to_map(await response.json());
+	if(player_base_info.get('error') == 'No data')
+		set_status('...');
+	else {
+		try {
+			status = player_base_info.get('info').get('status');
+			set_status(status == null ? '...' : status);
+		} catch {}
+		try {
+			if(user != null && (player.get('id') == user.get('id') || user.get('is_admin'))) {
+				document.getElementById('edit-status-button').style.transform = 'scale(1)';
+			}
+		} catch {}
+	}
+
 	document.getElementById("top").style.visibility = "unset";
-	document.getElementById("player-card").style.animation = "fadein-player-card 1s";
 
 	document.getElementById("header-main-button").addEventListener('click', header_button_click, false);
 	document.getElementById("header-season-button").addEventListener('click', header_button_click, false);
+	document.getElementById("edit-status-button").addEventListener('click', start_edit_status, false);
+	document.getElementById("send-status-button").addEventListener('click', send_edit_status, false);
 	select_header_button(document.getElementById("header-main-button"));
 
 	response = await fetch("https://api.vimeworld.ru/user/"+player.get('id')+"/friends");
@@ -94,12 +109,28 @@ async function init() {
 	friends.forEach(async (friend) => {
 		make_friend(friend);
 	});
-	document.getElementById('friends-title').innerHTML = 'Друзей '+friends.size;
+	console.log(friends)
+	document.getElementById('player-info-header').innerHTML += '<span>Друзей '+(friends.size == null ? friends.length : friends.size)+'</span>';
 
 	load_player_stats();
+
+	get_actions_div();
+	today = new Date();
+	current_date = today.getDate()+'.'+(today.getMonth()+1)+'.'+today.getFullYear();
+	await get_actions(user_id, current_date,current_date)
+	make_100_actions();
+	await make_lb_main(user_id);
 }
-init();
-var sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
+function post_init() {
+	document.getElementById("stats-loading").style.animation = 'out-stats-loading 0.5s';
+	document.getElementById("stats-loading").style.height = '0';
+}
+
+async function run() {
+	await init();
+	post_init();
+}
+run();
 
 function make_friend(friend) {
 	friend_div = document.createElement('a');
@@ -112,7 +143,7 @@ function make_friend(friend) {
 	name_span.style.color = 'var(--'+friend.get('rank').toLowerCase()+'-rank-color)';
 	friend_div.append(head);
 	friend_div.append(name_span);
-	document.getElementById('friends-hover').append(friend_div);
+	document.getElementById('friends-list').append(friend_div);
 }
 
 function formate_time(time) {
@@ -133,121 +164,6 @@ function formate_time(time) {
 	return formated_time
 }
 
-function make_lb_sort_locale() {
-	lb_sort_locale.set('level', 'Уровень')
-	lb_sort_locale.set('online', 'Онлайн')
-	lb_sort_locale.set('kills', 'Убийств')
-	lb_sort_locale.set('wins', 'Побед')
-	lb_sort_locale.set('bedBreaked', 'Кроватей сломано')
-	lb_sort_locale.set('total_wins', 'Всего побед')
-	lb_sort_locale.set('total_games', 'Всего игр')
-	lb_sort_locale.set('rate', 'Рейтинг')
-	lb_sort_locale.set('points', 'Очков')
-	lb_sort_locale.set('total_blocks', 'Всего блоков')
-	lb_sort_locale.set('earned_money', 'Заработано монет')
-	lb_sort_locale.set('wins_as_maniac', 'Побед за Маньяка')
-	lb_sort_locale.set('tamed_sheep', 'Перетащено овец')
-}
-
-function make_blocks_locale() {
-	blocks_locale.set("1", "Камень");
-	blocks_locale.set("3", "Земля");
-	blocks_locale.set("12", "Песок");
-	blocks_locale.set("13", "Гравий");
-	blocks_locale.set("14", "Золотая руда");
-	blocks_locale.set("15", "Железная руда");
-	blocks_locale.set("16", "Угольная руда");
-	blocks_locale.set("17", "Дуб");
-	blocks_locale.set("22", "Блок Лазурита");
-	blocks_locale.set("23", "Раздатчик");
-	blocks_locale.set("24", "Песчаник");
-	blocks_locale.set("29", "Липкий поршень");
-	blocks_locale.set("30", "Паутина");
-	blocks_locale.set("33", "Поршень");
-	blocks_locale.set("35", "Белая шерсть");
-	blocks_locale.set("41", "Золотой блок");
-	blocks_locale.set("42", "Железный блок");
-	blocks_locale.set("43", "Каменная плита");
-	blocks_locale.set("45", "Кирпичи");
-	blocks_locale.set("48", "Замшелый булыжник");
-	blocks_locale.set("49", "Обсидиан");
-	blocks_locale.set("56", "Алмазная руда");
-	blocks_locale.set("57", "Алмазный блок");
-	blocks_locale.set("73", "Редстоуновая руда");
-	blocks_locale.set("79", "Лед");
-	blocks_locale.set("80", "Блок снега");
-	blocks_locale.set("86", "Тыква");
-	blocks_locale.set("87", "Адский камень");
-	blocks_locale.set("88", "Песок душ");
-	blocks_locale.set("89", "Светокамень");
-	blocks_locale.set("103", "Арбуз");
-	blocks_locale.set("118", "Котел");
-	blocks_locale.set("121", "Эндерняк");
-	blocks_locale.set("129", "Изумрудная руда");
-	blocks_locale.set("133", "Изумрудный блок");
-	blocks_locale.set("152", "Блок редстоуна");
-	blocks_locale.set("153", "Кварцевая руда");
-	blocks_locale.set("155", "Блок кварца");
-	blocks_locale.set("158", "Выбрасыватель");
-	blocks_locale.set("162", "Акация");
-	blocks_locale.set("168", "Призмарин");
-	blocks_locale.set("170", "Стог сена");
-	blocks_locale.set("172", "Обожженная глина");
-	blocks_locale.set("173", "Блок Угля");
-	blocks_locale.set("174", "Твердый лед");
-	blocks_locale.set("179", "Красный песчаник");
-	blocks_locale.set("198", "Эндер стержень");
-	blocks_locale.set("201", "Пурпурный блок");
-	blocks_locale.set("202", "Пурпурная колонна");
-	blocks_locale.set("216", "Костный блок");
-	blocks_locale.set("251", "Белый бетон");
-	blocks_locale.set("252", "Белый сухой бетон");
-	blocks_locale.set("159:14", "Красная обожженная глина");
-	blocks_locale.set("17:3", "Тропическое дерево");
-	blocks_locale.set("159:5", "Лаймовая обожженная глина");
-	blocks_locale.set("17:1", "Ель");
-	blocks_locale.set("159:1", "Оранжевая обожженная глина");
-	blocks_locale.set("168:2", "Темный призмарин");
-	blocks_locale.set("168:1", "Призмариновые кирпичи");
-	blocks_locale.set("252:9", "Бирюзовый сухой бетон");
-	blocks_locale.set("98:3", "Резные каменные кирпичи");
-	blocks_locale.set("98:2", "Потресканные каменные кирпичи");
-	blocks_locale.set("98:1", "Замшелые каменные кирпичи");
-	blocks_locale.set("1:5", "Андезит");
-	blocks_locale.set("1:1", "Гранит");
-	blocks_locale.set("95:10", "Фиолетовое стекло");
-	blocks_locale.set("179:1", "Резной красный песчаник");
-	blocks_locale.set("12:1", "Красный песок");
-	blocks_locale.set("95:2", "Пурпурное стекло");
-	blocks_locale.set("251:8", "Бирюзовый бетон");
-	blocks_locale.set("155:2", "Кварцевая колонна");
-	blocks_locale.set("155:1", "Резной кварц");
-	blocks_locale.set("24:2", "Гладкий песчаник");
-	blocks_locale.set("24:1", "Резной песчаник");
-	blocks_locale.set("162:3", "Искаженная ножка");
-	blocks_locale.set("162:2", "Багровая ножка");
-	blocks_locale.set("252:15", "Черный сухой бетон");
-	blocks_locale.set("252:14", "Красный сухой бетон");
-	blocks_locale.set("252:13", "Зеленый сухой бетон");
-	blocks_locale.set("252:11", "Синий сухой бетон");
-	blocks_locale.set("252:10", "Фиолетовый сухой бетон");
-	blocks_locale.set("252:8", "Светло-серый сухой бетон");
-	blocks_locale.set("252:7", "Серый сухой бетон");
-	blocks_locale.set("252:6", "Розовый сухой бетон");
-	blocks_locale.set("252:5", "Лаймовый сухой бетон");
-	blocks_locale.set("252:4", "Желтый сухой бетон");
-	blocks_locale.set("252:3", "Голубой сухой бетон");
-	blocks_locale.set("252:2", "Пурпурный сухой бетон");
-	blocks_locale.set("252:1", "Оранжевый сухой бетон");
-	blocks_locale.set("1:3", "Диорит");
-	blocks_locale.set("252:12", "Коричневый сухой бетон");
-	blocks_locale.set("35:13", "Зеленая шерсть");
-	blocks_locale.set("95", "Белое стекло");
-	blocks_locale.set("98", "Каменные кирпичи");
-	blocks_locale.set("18", "Дубовая листва");
-	blocks_locale.set("11", "Лава");
-}
-
 function make_stat_row(name, value) {
 	if(name == 'Сломанные блоки') {
 		var stat_title = document.createElement("div");
@@ -259,26 +175,32 @@ function make_stat_row(name, value) {
 
 		stat_title.append(stat_hover);
 
-		value = new Map([...value.entries()].sort((a, b) => b[1] - a[1]));
+		try {
+			value = new Map([...value.entries()].sort((a, b) => b[1] - a[1]));
 
-		value.forEach(async (count, id) => {
-			if(count >= 1000000){
-				count = Math.round(count/100000)/10.0;
-				count_text = count+'м';
-			}
-			else if(count >= 100000){
-				count = Math.round(count/1000);
-				count_text = count+'к';
-			}
-			else if(count >= 10000){
-				count = Math.round(count/100)/10.0;
-				count_text = count+'к';
-			}
-			else
-				count_text = count+'';
-			stat_row = make_stat_row(blocks_locale.get(id), count_text);
-			stat_hover.append(stat_row);
-		});
+			value.forEach(async (count, id) => {
+				if(count >= 1000000){
+					count = Math.round(count/100000)/10.0;
+					count_text = count+'м';
+				}
+				else if(count >= 100000){
+					count = Math.round(count/1000);
+					count_text = count+'к';
+				}
+				else if(count >= 10000){
+					count = Math.round(count/100)/10.0;
+					count_text = count+'к';
+				}
+				else
+					count_text = count+'';
+				stat_row = make_stat_row(locale.get('blocks').get(id), count_text);
+				stat_hover.append(stat_row);
+			});
+		}
+		catch (e) {
+			if(!(e instanceof TypeError))
+				throw e;
+		}
 		return stat_title;
 	}
 	else {
@@ -307,19 +229,21 @@ function make_lb_row(name, place, diff) {
 	span_place = document.createElement("span");
 	span_place.innerHTML = place;
 
-	span_diff = document.createElement("div");
-	if(diff >= 0) {
-		span_diff.innerHTML = "+"+diff;
-		span_diff.style.backgroundColor = 'var(--green-color-s)';
-	}
-	else {
-		span_diff.innerHTML = diff;
-		span_diff.style.backgroundColor = 'var(--red-color-s)';
+	if(diff != 0) {
+		span_diff = document.createElement("div");
+		if(diff >= 0) {
+			span_diff.innerHTML = "+"+diff;
+			span_diff.style.backgroundColor = 'var(--green-color-s)';
+		}
+		else {
+			span_diff.innerHTML = diff;
+			span_diff.style.backgroundColor = 'var(--red-color-s)';
+		}
+		span_place.append(span_diff);
 	}
 
 	stat_row.append(span_name);
 	stat_row.append(span_place);
-	span_place.append(span_diff);
 	return stat_row;
 }
 
@@ -353,6 +277,164 @@ function show_hide_action() {
 	}
 }
 
+function on_body_click(event) {
+	match_info_div = document.getElementById('match-info-div');
+	if(match_info_div != event.target && !match_info_div.contains(event.target))
+		hide_match_info();
+}
+
+function action_more_info(event) {
+	tag = this.getAttribute('data-tag');
+	if(tag == 'match') {
+		show_match_info(this.getAttribute('data-match-id'))
+		event.preventDefault();
+	}
+}
+
+async function show_match_info(match_id) {
+	match_info_div = document.getElementById('match-info-div');
+	match_info_div.innerHTML = '';
+	match_info_div.style.animation = 'fadein-match-info 0.5s'
+	match_info_div.style.visibility = 'unset';
+	match_info_div.style.opacity = '1';
+
+	response = await fetch("https://api.vimeworld.ru/match/"+match_id);
+	var match = json_to_map(await response.json());
+
+	game_name_div = document.createElement('div');
+	game_name_div.className = 'match-info-row'
+	game_name_div.innerHTML = '<span>Игра: <span>'+locale.get('games').get(match.get('game').toLowerCase()).get('name')+'</span></span>'
+	match_info_div.append(game_name_div);
+
+	server_div = document.createElement('div');
+	server_div.className = 'match-info-row'
+	server_div.innerHTML = '<span>Сервер: <span>'+match.get('server')+'</span></span>'
+	match_info_div.append(server_div);
+
+	start_div = document.createElement('div');
+	start_div.className = 'match-info-row'
+	start_div.innerHTML = '<span>Начало: <span>'+format_date(new Date(parseInt(match.get('start'), 10)*1000))+'</span></span>'
+	match_info_div.append(start_div);
+
+	end_div = document.createElement('div');
+	end_div.className = 'match-info-row'
+	end_div.innerHTML = '<span>Конец: <span>'+format_date(new Date(parseInt(match.get('end'), 10)*1000))+'</span></span>'
+	match_info_div.append(end_div);
+
+	time_div = document.createElement('div');
+	time_div.className = 'match-info-row'
+	time_div.innerHTML = '<span>Длительность: <span>'+formate_time(parseInt(match.get('end'), 10)-parseInt(match.get('start'), 10))+'</span></span>'
+	match_info_div.append(time_div);
+
+	map_div = document.createElement('div');
+	map_div.className = 'match-info-row'
+	map_div.innerHTML = '<span>Карта: <span>'+match.get('mapName')+'</span></span>'
+	match_info_div.append(map_div);
+
+	winners_title_div = document.createElement('div');
+	winners_title_div.className = 'match-info-row'
+	winners_title_div.innerHTML = '<span>Победители:</span>'
+	match_info_div.append(winners_title_div);
+
+	winners_list = document.createElement('div');
+	winners_list.className = 'match-info-list'
+	match_info_div.append(winners_list);
+
+	members_title_div = document.createElement('div');
+	members_title_div.className = 'match-info-row'
+	members_title_div.innerHTML = '<span>Участники:</span>'
+	match_info_div.append(members_title_div);
+
+	users_list = document.createElement('div');
+	users_list.className = 'match-info-list'
+	match_info_div.append(users_list);
+
+	players_list = []
+	match.get('players').forEach(async (data, num) => {
+		players_list.push(data.get('id'));
+	});
+
+	response = await fetch("https://api.vimeworld.ru/user/session", {
+		method: "POST",
+		headers: {'Content-Type': 'application/json'}, 
+		body: JSON.stringify(players_list)
+	})
+	players_data = json_to_map(await response.json());
+
+	if(match.get('teams') != null) {
+		match.get('teams').forEach(async (team, num) => {
+			team.get('members').forEach(async (user, num) => {
+				get_user_from_list(players_data, user).set('team', team.get('id'));
+			});
+		});
+	}
+
+	winner = match.get('winner');
+
+	if(winner.get('player') != null) {
+		winners_list.append(make_user_el(get_user_from_list(players_data, winner.get('player'))));
+	}
+	else if(winner.get('players') != null) {
+		winner.get('players').forEach(async (user, num) => {
+			winners_list.append(make_user_el(get_user_from_list(players_data, user)));
+		});
+	}
+	else if(winner.get('team') != null) {
+		win_team = winner.get('team');
+		match.get('teams').forEach(async (team, num) => {
+			if(team.get('id') == win_team) {
+				team.get('members').forEach(async (user, num) => {
+					winners_list.append(make_user_el(get_user_from_list(players_data, user)));
+				});
+				return;
+			}
+		});
+	}
+
+	players_data.forEach(async (user, num) => {
+		users_list.append(make_user_el(user));
+	});
+}
+
+function get_user_from_list(list, id) {
+	user = null;
+
+	list.forEach(async (u, num) => {
+		if(u.get('id') == id) {
+			user = u;
+			return;
+		}
+	});
+	return user;
+}
+
+function make_user_el(user) {
+	user_div = document.createElement('a');
+	user_div.className = 'user-el';
+	user_div.href = '/player/'+user.get('username');
+	head = document.createElement('img');
+	head.src = '//skin.vimeworld.ru/helm/3d/'+user.get('username')+'.png';
+	name_span = document.createElement('span');
+	name_span.style.color = 'var(--'+user.get('rank').toLowerCase()+'-rank-color)';
+	name_span.innerHTML = user.get('username');
+	if(user.get('team') != null) {
+		if(user.get('team').length > 1)
+			name_span.style.color = 'var(--mc-color-'+locale.get('minecraft_colors').get(user.get('team'))+')';
+		else
+			name_span.innerHTML = '['+user.get('team')+'] '+user.get('username');
+	}
+	user_div.append(head);
+	user_div.append(name_span);
+	return user_div;
+}
+
+function hide_match_info() {
+	match_info_div = document.getElementById('match-info-div');
+	match_info_div.style.animation = 'fadeout-match-info 0.5s'
+	match_info_div.style.visibility = 'hidden';
+	match_info_div.style.opacity = '0';
+}
+
 function show_hide_filter() {
 	filter_window = document.getElementById('filter-window');
 	if (filter_window.style.height == '0px') {
@@ -379,7 +461,7 @@ function filter() {
 		this.style.background = 'var(--primary-color)';
 		filter_list.set(tag, true);
 	}
-    get_actions_div();
+	get_actions_div();
     make_100_actions();
 }
 
@@ -475,19 +557,12 @@ function get_and_clear_stats_div() {
 
 function get_actions_div() {
 	var actions_div = document.getElementById("actions-div");
-    if(actions_div == null) {
-	  	actions_div = document.createElement("div");
-	    actions_div.className = "actions-div";
-	    actions_div.id = "actions-div";
-
-	    actions_div_header = document.createElement("div");
-	    actions_div_header.className = "actions-div-header";
-	    actions_div.append(actions_div_header);
-
-	    actions_div_header.innerHTML = '<span>Список матчей по времени</span>'
+    if(document.getElementById("filter-div") == null) {
+	    actions_div_header = document.getElementById("actions-div-header");
 
 	    filter_div = document.createElement("div");
 	    filter_div.className = "filter-div";
+	    filter_div.id = "filter-div";
 	    src = "/static/png/filter.png";
 	    filter_div.innerHTML = "<img src='"+src+"'>";
 	    filter_div.addEventListener('click', show_hide_filter, false);
@@ -501,9 +576,7 @@ function get_actions_div() {
 	    actions_div_header.append(filter_window);
 
 	    filter_window.append(make_filter_element('Матчи', 'match'));
-	    // filter_window.append(make_filter_element('Активность', 'game'));
 	    filter_window.append(make_filter_element('Опыт', 'xp'));
-	    // filter_window.append(make_filter_element('Онлайн', 'online'));
 	    filter_window.append(make_filter_element('Наиграно', 'playedSeconds'));
 	    filter_window.append(make_filter_element('Статус', 'rank'));
 
@@ -517,8 +590,6 @@ function get_actions_div() {
 		    if(scroll_bottom <= 2000)
 		    	make_100_actions();
 		});
-
-	    document.getElementById('data-place').append(actions_div);
     }
     else {
     	document.getElementById("actions-place").innerHTML = "";
@@ -595,7 +666,7 @@ function get_filter_actions() {
 	actions_tmp = new Array();
 	actions.forEach(async (action) => {
 		actions_data = json_to_map(JSON.parse(action.get('2').replaceAll("'", "\"").replaceAll("False", "false").replaceAll("True", "true")));
-		actions_data.set('date', format_date(new Date(action.get('1'))))
+		actions_data.set('date', format_date(new Date(parseInt(action.get('1'), 10)*1000)))
 		if (actions_data.get('match') != null && filter_list.get('match'))
 			actions_tmp.push(actions_data);
 		else if (actions_data.get('xp') != null && filter_list.get('xp'))
@@ -606,6 +677,12 @@ function get_filter_actions() {
 			actions_tmp.push(actions_data);
 	});
 	return actions_tmp;
+}
+
+async function get_actions(user_id, start_date, end_date) {
+	response = await fetch("/api/"+user_id+"/actions?start_date="+start_date+"&end_date="+end_date);
+	actions = json_to_map(await response.json()).get('actions');
+	actions = new Map(Array.from(actions).reverse());
 }
 
 function make_100_actions() {
@@ -624,20 +701,21 @@ function make_100_actions() {
 function make_action(action) {
 	action_div = null;
 	match = action.get('match');
-	time = action.get('date');
+	time = action.get('date')
 	if (match != null && filter_list.get('match')) {
 		is_win = match.get('wins') > 0;
 		action_div = document.createElement("div");
 		action_div.className = "actions";
 		action_div.setAttribute('data-tag', 'match');
+		action_div.setAttribute('data-match-id', match.get('id'));
 
 		var actions_header = document.createElement("div");
 		actions_header.className = "actions-header";
 		actions_header.style.font_family = "'Fredoka', sans-serif";
 		if(is_win)
-			actions_header.style.background = "linear-gradient(to right, var(--green-color) 30%, var(--primary-color))";
+			actions_header.style.background = "linear-gradient(to right, var(--green-color) 70%, var(--primary-color))";
 		else
-			actions_header.style.background = "linear-gradient(to right, var(--red-color) 30%, var(--primary-color))";
+			actions_header.style.background = "linear-gradient(to right, var(--red-color) 70%, var(--primary-color))";
 		game = match.get('game').toLowerCase();
 		game_name = locale.get('games').get(game).get('name');
 
@@ -650,6 +728,7 @@ function make_action(action) {
 
     	actions_header.innerHTML = game_name+"<span>["+time+"]</span>";
     	action_div.addEventListener('click', show_hide_action, false);
+    	action_div.addEventListener('contextmenu', action_more_info, false);
 		action_div.append(actions_header);
 
 		match.forEach((stat, stat_name) => {
@@ -710,11 +789,53 @@ function make_lb(lb) {
 		value.forEach(async (data, sort) => {
 			diff = data.get('diff')
 			place = data.get('place')
-			lb_row = make_lb_row(lb_sort_locale.get(sort), place, diff)
+			lb_row = make_lb_row(locale.get('lb_sort').get(sort), place, diff)
 			lb_row_place.append(lb_row);
 		});
 		lb_content.append(lb_row_place);
 		lb_div.append(lb_content);
+	});
+}
+
+async function make_lb_main(user_id) {
+	get_leaderboard_div();
+	response = await fetch("https://api.vimeworld.com/user/"+user_id+"/leaderboards");
+	var lb_data = json_to_map(await response.json());
+	var lb_place = document.getElementById("lb-place");
+	lb_data.get("leaderboards").forEach(async (value, num) => {
+		lb_div = null;
+		lb_row_place = null;
+		lb_place.childNodes.forEach(node => {
+    		if(node != null && node.getAttribute('data-type') == value.get('type')) {
+    			lb_div = node;
+    		}
+		});
+		if(lb_div != null) {
+			lb_row_place = lb_div.getElementsByClassName('stat-content')[0].getElementsByClassName('stat-row-place')[0];
+		}
+		else {
+			lb_div = document.createElement("div");
+	    	lb_div.className = "lb";
+	    	lb_div.setAttribute('data-type', value.get('type'));
+	    	lb_place.append(lb_div);
+
+	    	lb_header = document.createElement("div");
+	    	lb_header.className = "lb-header";
+	    	lb_header.style.font_family = "'Fredoka', sans-serif";
+	    	lb_header.innerHTML = leaderboard_list.get(value.get('type')).get('description');
+	    	lb_div.append(lb_header);
+
+	    	lb_content = document.createElement("div");
+			lb_content.className = "stat-content";
+			lb_row_place = document.createElement("div");
+			lb_row_place.className = "stat-row-place";
+
+			lb_content.append(lb_row_place);
+			lb_div.append(lb_content);
+		}
+
+		lb_row = make_lb_row(locale.get('lb_sort').get(value.get('sort')), value.get('place'), 0);
+		lb_row_place.append(lb_row);
 	});
 }
 
@@ -733,14 +854,14 @@ $(function() {
 
   	document.getElementById("loading").style.animation = 'loading-in 0.5s';
   	document.getElementById("loading").style.visibility = 'unset';
-  	document.getElementById("select-hint").style.visibility = 'hidden';
   	select_header_button(null);
 
   	try {
 	  	response = await fetch("/api/"+user_id+"/stats?start_date="+start.format('DD.MM.YYYY')+"&end_date="+end.format('DD.MM.YYYY'));
 		var stats = json_to_map(await response.json());
-		response = await fetch("/api/"+user_id+"/actions?start_date="+start.format('DD.MM.YYYY')+"&end_date="+end.format('DD.MM.YYYY'));
-		actions = json_to_map(await response.json()).get('actions');
+		// response = await fetch("/api/"+user_id+"/actions?start_date="+start.format('DD.MM.YYYY')+"&end_date="+end.format('DD.MM.YYYY'));
+		// actions = json_to_map(await response.json()).get('actions');
+		await get_actions(user_id, start.format('DD.MM.YYYY'), end.format('DD.MM.YYYY'))
 		var games = stats.get('games');
 		response = await fetch("/api/"+user_id+"/leaderboard?start_date="+start.format('DD.MM.YYYY')+"&end_date="+end.format('DD.MM.YYYY'));
 		var lb = json_to_map(await response.json());
@@ -797,10 +918,8 @@ async function load_player_stats(type='global') {
 	var player_stats = player_data.get('stats');
 	var player = player_data.get('user');
 	get_and_clear_stats_div();
-	actions_div = document.getElementById('actions-div');
-	if(actions_div != null) actions_div.remove();
-	lb_div = document.getElementById('lb-div');
-	if(lb_div != null) lb_div.remove();
+	// actions_div = document.getElementById('actions-div');
+	// if(actions_div != null) actions_div.remove();
 	update_top_stats(0, player.get('playedSeconds'));
 
 	var stats_div = document.getElementById("stats-place");
@@ -842,4 +961,50 @@ async function load_player_stats(type='global') {
 		stat_content.append(stat_row_place);
 		stat_div.append(stat_content);
 	});
+}
+
+function start_edit_status() {
+	document.getElementById('edit-status-button').style.transform = 'scale(0)';
+	document.getElementById('send-status-button').style.transform = 'scale(1)';
+	document.getElementById('player-status-edit-div').style.transform = 'scale(1)';
+	document.getElementById('player-status-edit-div').style.height = '-webkit-fill-available';
+	document.getElementById('player-status-span').style.transform = 'scale(0)';
+	document.getElementById('player-status-span').style.height = '0';
+}
+
+async function send_edit_status() {
+	status = document.getElementById('player-status-input').value;
+
+	response = await fetch("/api/player/status", {
+		method: "POST",
+		headers: {'Content-Type': 'application/json'}, 
+		body: JSON.stringify({'token': get_cookie().get('auth_token'), 'status': status, 'user_id': user_id})
+	});
+	result = json_to_map(await response.json());
+	if(result.get('result') == 'ok') {
+		set_status(status);
+		// document.getElementById('player-status-span').textContent = status; //.replaceAll('\n', '<br />');
+		document.getElementById('edit-status-button').style.transform = 'scale(1)';
+		document.getElementById('send-status-button').style.transform = 'scale(0)';
+		document.getElementById('player-status-edit-div').style.transform = 'scale(0)';
+		document.getElementById('player-status-edit-div').style.height = '0';
+		await sleep(500);
+		document.getElementById('player-status-span').style.transform = 'scale(1)';
+		document.getElementById('player-status-span').style.height = 'unset';
+	}
+	else {
+		send_error_notify(result.get('result'));
+	}
+}
+
+var statusRegex = /["]/g;
+function onStatusInput(el) {
+	el.value = el.value.replaceAll(statusRegex, '');
+}
+
+async function set_status(status) {
+	document.getElementById('player-status-input').value = status;
+	status_div = document.getElementById('player-status-span');
+	status_div.textContent = status.replaceAll('\n', '<br />');
+	status_div.innerHTML = await parse_status(status_div.innerHTML);
 }

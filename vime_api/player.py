@@ -1,4 +1,5 @@
-from guild import GuildSearch
+from vime_api.guild_search import GuildSearch
+
 
 class Player():
 	def __init__(self, player_data):

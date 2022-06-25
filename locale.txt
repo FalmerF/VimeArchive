@@ -1,1 +1,674 @@
-{'games': {'ann': {'name': 'Annihilation'}, 'bb': {'name': 'BuildBattle'}, 'bp': {'name': 'BlockParty'}, 'bw': {'name': 'BedWars'}, 'cp': {'name': 'ClashPoint'}, 'dr': {'name': 'DeathRun'}, 'duels': {'name': 'Duels'}, 'gg': {'name': 'GunGame'}, 'hg': {'name': 'HungerGames'}, 'kpvp': {'name': 'KitPvP'}, 'mw': {'name': 'MobWars'}, 'prison': {'name': 'Prison'}, 'sw': {'name': 'SkyWars'}, 'arc': {'name': 'Аркады'}, 'bridge': {'name': 'The Bridge'}, 'jumpleague': {'name': 'Jump League'}, 'murder': {'name': 'Murder Mystery'}, 'sheep': {'name': 'SheepWars'}, 'turfwars': {'name': 'Turf Wars'}, 'tnttag': {'name': 'TNT Tag'}, 'tntrun': {'name': 'TNT Run'}, 'luckywars': {'name': 'Lucky Wars'}, 'zombieclaus': {'name': 'Царство Зомби Мороза'}, 'hide': {'name': 'Hide and Seek'}, 'speedbuilders': {'name': 'Speed Builders'}, 'fallguys': {'name': 'Fall Guys'}, 'teamfortress': {'name': 'Team Fortress'}, 'eggwars': {'name': 'Egg Wars'}}, 'game_stats': {'ann': {'kills': 'Убийств', 'bowkills': 'Убийств из лука', 'wood': 'Срублено дерева', 'ores': 'Руды выкопано', 'nexus': 'Урона по базе', 'digged': 'Земли выкопано', 'games': 'Игр'}, 'bb': {'games': 'Игр', 'wins': 'Побед', 'points': 'Очков набрано'}, 'bp': {'games': 'Игр', 'wins': 'Побед', 'levels': 'Пройдено уровней', 'aliveTime': 'Время жизни'}, 'bw': {'kills': 'Убийств', 'deaths': 'Смертей', 'games': 'Игр', 'wins': 'Побед', 'bedBreaked': 'Кроватей сломано', 'aliveTime': 'Время жизни', 'spentGold': 'Потрачено золота', 'spentBronze': 'Потрачено бронзы', 'spentIron': 'Потрачено железа', 'brokenBeds': 'Кроватей сломано'}, 'cp': {'kills': 'Убийств', 'deaths': 'Смертей', 'games': 'Игр', 'wins': 'Побед', 'resourcePointsBreaked': 'Точек рес. сломано', 'spentGold': 'Потрачено золота', 'rpBroken': 'Точек рес. сломано'}, 'dr': {'games': 'Игр', 'wins': 'Побед'}, 'duels': {'solo_wins': 'Одиночных побед', 'solo_games': 'Одиночных игр', 'team_wins': 'Командных побед', 'team_games': 'Командных игр', 'ranked_games': 'Рейтинговых игр', 'ranked_wins': 'Рейтинговых побед', 'total_wins': 'Всего побед', 'total_games': 'Всего игр', 'wins_classic': 'Побед Classic', 'wins_bow': 'Побед на луках', 'wins_op': 'Побед OP', 'wins_potion': 'Побед на зельях', 'wins_uhc': 'Побед UHC', 'wins_bwh': 'Побед BWH', 'maxstrike': 'Макс. побед подряд', 'rate': 'Рейтинг', 'max_rate': 'Макс. рейтинг', 'wins': 'Всего побед', 'kills': 'Убийств', 'games': 'Игр'}, 'gg': {'kills': 'Убийств', 'wins': 'Побед', 'games': 'Игр', 'levels': 'Набрано уровней'}, 'hg': {'kills': 'Убийств', 'wins': 'Побед', 'games': 'Игр', 'luckyBlocks': 'Сломано лаки блоков', 'aliveTime': 'Время жизни'}, 'kpvp': {'kills': 'Убийств', 'deaths': 'Смертей', 'points': 'Очков', 'games': 'Игр'}, 'mw': {'games': 'Игр', 'wins': 'Побед', 'mobsKilled': 'Убито мобов', 'mobsSended': 'Послано мобов', 'maxIncome': 'Макс. доход', 'mobsSent': 'Послано мобов', 'income': 'Доход'}, 'prison': {'total_blocks': 'Всего блоков', 'earned_money': 'Получено денег', 'kills': 'Убийств', 'deaths': 'Смертей', 'mobs': 'Убито мобов', 'blocks': 'Сломанные блоки', 'games': 'Игр'}, 'sw': {'wins': 'Побед', 'games': 'Игр', 'kills': 'Убийств', 'deaths': 'Смертей', 'arrowsFired': 'Стрел выпущено', 'blocksBroken': 'Блоков сломано', 'blocksPlaced': 'Блоков поставлено', 'currentWinStreak': 'Серия побед', 'winStreak': 'Побед подряд', 'aliveTime': 'Время жизни'}, 'arc': {'games': 'Игр', 'wins': 'Побед', 'kills': 'Убийств', 'deaths': 'Смертей'}, 'bridge': {'games': 'Игр', 'wins': 'Побед', 'kills': 'Убийств', 'deaths': 'Смертей', 'points': 'Очков', 'damage': 'Урона нанесено'}, 'jumpleague': {'games': 'Игр', 'wins': 'Побед', 'kills': 'Убийств', 'deaths': 'Смертей', 'checkpoints': 'Чекпоинтов', 'damage': 'Урона нанесено'}, 'murder': {'games': 'Игр', 'wins': 'Всего побед', 'wins_as_innocent': 'Побед мирным', 'wins_as_maniac': 'Побед маньяком', 'wins_as_detective': 'Побед детективом', 'kills': 'Убийств', 'wins': 'Всего побед', 'collectedGold': 'Собрано золота'}, 'sheep': {'games': 'Игр', 'wins': 'Побед', 'kills': 'Убийств', 'deaths': 'Смертей'}, 'turfwars': {'games': 'Игр', 'wins': 'Побед', 'kills': 'Убийств', 'deaths': 'Смертей'}, 'tnttag': {'games': 'Игр', 'wins': 'Побед', 'kills': 'Убийств'}, 'tntrun': {'games': 'Игр', 'wins': 'Побед', 'broken_blocks': 'Блоков сломано', 'brokenBlocks': 'Блоков сломано'}, 'luckywars': {'games': 'Игр', 'wins': 'Побед', 'kills': 'Убийств', 'deaths': 'Смертей', 'lucky_blocks': 'Сломано лаки блоков', 'damage': 'Урона нанесено', 'luckyBlocks': 'Сломано лаки блоков'}, 'zombieclaus': {'games': 'Игр', 'wins': 'Побед', 'kills': 'Убийств', 'gifts': 'Подарков'}, 'hide': {'games': 'Игр', 'total_wins': 'Всего побед', 'wins_as_seeker': 'Побед за искателя', 'wins_as_hider': 'Побед прячущимся', 'kills': 'Убийств'}, 'speedbuilders': {'games': 'Игр', 'wins': 'Побед', 'round': 'Раундов'}, 'fallguys': {'games': 'Игр', 'wins': 'Побед'}, 'teamfortress': {'games': 'Игр', 'wins': 'Побед', 'kills': 'Убийств', 'deaths': 'Смертей'}, 'eggwars': {'games': 'Игр', 'wins': 'Побед', 'kills': 'Убийств', 'deaths': 'Смертей', 'assists': 'Помощь в убийстве', 'monsters': 'Убито мобов'}}, 'ranks': {'player': {'name': 'Игрок', 'prefix': ''}, 'vip': {'name': 'VIP', 'prefix': 'V'}, 'premium': {'name': 'Premium', 'prefix': 'P'}, 'holy': {'name': 'Holy', 'prefix': 'H'}, 'immortal': {'name': 'Immortal', 'prefix': 'I'}, 'builder': {'name': 'Билдер', 'prefix': 'Билдер'}, 'srbuilder': {'name': 'Проверенный билдер', 'prefix': 'Пр. билдер'}, 'maplead': {'name': 'Главный билдер', 'prefix': 'Гл. билдер'}, 'youtube': {'name': 'YouTube', 'prefix': 'YouTube'}, 'dev': {'name': 'Разработчик', 'prefix': 'Dev'}, 'organizer': {'name': 'Организатор', 'prefix': 'Организатор'}, 'moder': {'name': 'Модератор', 'prefix': 'Модер'}, 'warden': {'name': 'Проверенный модератор', 'prefix': 'Модер'}, 'chief': {'name': 'Главный модератор', 'prefix': 'Гл. модер'}, 'admin': {'name': 'Главный админ', 'prefix': 'Гл. админ'}}}
+{
+  'games': {
+    'ann': {
+      'name': 'Annihilation'
+    }, 
+    'bb': {
+      'name': 'BuildBattle'
+    }, 
+    'bp': {
+      'name': 'BlockParty'
+    }, 
+    'bw': {
+      'name': 'BedWars'
+    }, 
+    'bwt': {
+      'name': 'BedWars Turbo'
+    },
+    'cp': {
+      'name': 'ClashPoint'
+    }, 
+    'dr': {
+      'name': 'DeathRun'
+    }, 
+    'duels': {
+      'name': 'Duels'
+    }, 
+    'gg': {
+      'name': 'GunGame'
+    }, 
+    'hg': {
+      'name': 'HungerGames'
+    }, 
+    'kpvp': {
+      'name': 'KitPvP'
+    }, 
+    'mw': {
+      'name': 'MobWars'
+    }, 
+    'prison': {
+      'name': 'Prison'
+    }, 
+    'sw': {
+      'name': 'SkyWars'
+    }, 
+    'arc': {
+      'name': 'Аркады'
+    }, 
+    'bridge': {
+      'name': 'The Bridge'
+    }, 
+    'jumpleague': {
+      'name': 'Jump League'
+    }, 
+    'murder': {
+      'name': 'Murder Mystery'
+    }, 
+    'sheep': {
+      'name': 'SheepWars'
+    }, 
+    'turfwars': {
+      'name': 'Turf Wars'
+    }, 'tnttag': {
+      'name': 'TNT Tag'
+    }, 
+    'tntrun': {
+      'name': 'TNT Run'
+    }, 
+    'luckywars': {
+      'name': 'Lucky Wars'
+    }, 
+    'zombieclaus': {
+      'name': 'Царство Зомби Мороза'
+    }, 
+    'hide': {
+      'name': 'Hide and Seek'
+    }, 
+    'speedbuilders': {
+      'name': 'Speed Builders'
+    }, 
+    'fallguys': {
+      'name': 'Fall Guys'
+    }, 
+    'teamfortress': {
+      'name': 'Team Fortress'
+    }, 
+    'eggwars': {
+      'name': 'Egg Wars'
+    }
+  }, 
+  'game_stats': {
+    'user': {
+      'level': 'Уровень',
+      'online': 'Онлайн',
+      'wins': 'Побед',
+      'xp': 'Опыта',
+      'games': 'Игр'
+    },
+    'guild': {
+      'level': 'Уровень',
+      'total_coins': 'Коинов',
+      'totalCoins': 'Коинов'
+    },
+    'ann': {
+      'kills': 'Убийств', 
+      'bowkills': 'Убийств из лука', 
+      'wood': 'Срублено дерева', 
+      'ores': 'Руды выкопано', 
+      'nexus': 'Урона по базе', 
+      'digged': 'Земли выкопано', 
+      'games': 'Игр'
+    }, 
+    'bb': {
+      'games': 'Игр', 
+      'wins': 'Побед', 
+      'points': 'Очков набрано'
+    }, 
+    'bp': {
+      'games': 'Игр', 
+      'wins': 'Побед', 
+      'levels': 'Пройдено уровней', 
+      'aliveTime': 'Время жизни'
+    }, 
+    'bw': {
+      'kills': 'Убийств', 
+      'deaths': 'Смертей', 
+      'games': 'Игр', 
+      'wins': 'Побед', 
+      'bedBreaked': 'Кроватей сломано', 
+      'aliveTime': 'Время жизни', 
+      'spentGold': 'Потрачено золота', 
+      'spentBronze': 'Потрачено бронзы', 
+      'spentIron': 'Потрачено железа', 
+      'brokenBeds': 'Кроватей сломано'
+    }, 
+    'bwt': {
+      'kills': 'Убийств', 
+      'deaths': 'Смертей', 
+      'games': 'Игр', 
+      'wins': 'Побед', 
+      'bedBreaked': 'Кроватей сломано',
+      'spent_coins': 'Потрачено монет'
+    },
+    'cp': {
+      'kills': 'Убийств', 
+      'deaths': 'Смертей', 
+      'games': 'Игр', 
+      'wins': 'Побед', 
+      'resourcePointsBreaked': 'Точек рес. сломано', 
+      'spentGold': 'Потрачено золота', 
+      'rpBroken': 'Точек рес. сломано'
+    }, 
+    'dr': {
+      'games': 'Игр', 
+      'wins': 'Побед'
+    }, 
+    'duels': {
+      'solo_wins': 'Одиночных побед', 
+      'solo_games': 'Одиночных игр', 
+      'team_wins': 'Командных побед', 
+      'team_games': 'Командных игр', 
+      'ranked_games': 'Рейтинговых игр', 
+      'ranked_wins': 'Рейтинговых побед', 
+      'total_wins': 'Всего побед', 
+      'total_games': 'Всего игр', 
+      'wins_classic': 'Побед Classic', 
+      'wins_bow': 'Побед на луках', 
+      'wins_op': 'Побед OP', 
+      'wins_potion': 'Побед на зельях', 
+      'wins_uhc': 'Побед UHC', 
+      'wins_bwh': 'Побед BWH', 
+      'maxstrike': 'Макс. побед подряд', 
+      'rate': 'Рейтинг', 
+      'max_rate': 'Макс. рейтинг', 
+      'wins': 'Всего побед', 
+      'kills': 'Убийств', 
+      'games': 'Игр'
+    }, 
+    'gg': {
+      'kills': 'Убийств', 
+      'wins': 'Побед', 
+      'games': 'Игр', 
+      'levels': 'Набрано уровней'
+    }, 
+    'hg': {
+      'kills': 'Убийств', 
+      'wins': 'Побед', 
+      'games': 'Игр', 
+      'luckyBlocks': 'Сломано лаки блоков', 
+      'aliveTime': 'Время жизни'
+    }, 
+    'kpvp': {
+      'kills': 'Убийств', 
+      'deaths': 'Смертей', 
+      'points': 'Очков', 
+      'games': 'Игр'
+    }, 
+    'mw': {
+      'games': 'Игр', 
+      'wins': 'Побед', 
+      'mobsKilled': 'Убито мобов', 
+      'mobsSended': 'Послано мобов', 
+      'maxIncome': 'Макс. доход', 
+      'mobsSent': 'Послано мобов', 
+      'income': 'Доход'
+    }, 
+    'prison': {
+      'total_blocks': 'Всего блоков', 
+      'earned_money': 'Получено денег', 
+      'kills': 'Убийств', 
+      'deaths': 'Смертей', 
+      'mobs': 'Убито мобов', 
+      'blocks': 'Сломанные блоки', 
+      'games': 'Игр'
+    }, 
+    'sw': {
+      'wins': 'Побед', 
+      'games': 'Игр', 
+      'kills': 'Убийств', 
+      'deaths': 'Смертей', 
+      'arrowsFired': 'Стрел выпущено', 
+      'blocksBroken': 'Блоков сломано', 
+      'blocksPlaced': 'Блоков поставлено', 
+      'currentWinStreak': 'Серия побед', 
+      'winStreak': 'Побед подряд', 
+      'aliveTime': 'Время жизни'
+    }, 
+    'arc': {
+      'games': 'Игр', 
+      'wins': 'Побед', 
+      'kills': 'Убийств', 
+      'deaths': 'Смертей'
+    }, 
+    'bridge': {
+      'games': 'Игр', 
+      'wins': 'Побед', 
+      'kills': 'Убийств', 
+      'deaths': 'Смертей', 
+      'points': 'Очков', 
+      'damage': 'Урона нанесено'
+    }, 
+    'jumpleague': {
+      'games': 'Игр', 
+      'wins': 'Побед', 
+      'kills': 'Убийств', 
+      'deaths': 'Смертей', 
+      'checkpoints': 'Чекпоинтов', 
+      'damage': 'Урона нанесено'
+    }, 
+    'murder': {
+      'games': 'Игр', 
+      'wins': 'Всего побед', 
+      'wins_as_innocent': 'Побед мирным', 
+      'wins_as_maniac': 'Побед маньяком', 
+      'wins_as_detective': 'Побед детективом', 
+      'kills': 'Убийств', 'wins': 'Всего побед', 
+      'collectedGold': 'Собрано золота',
+      'total_wins': 'Всего побед'
+    }, 
+    'sheep': {
+      'games': 'Игр', 
+      'wins': 'Побед', 
+      'kills': 'Убийств', 
+      'deaths': 'Смертей',
+      'tamed_sheep': 'Перетащено овец'
+    }, 
+    'turfwars': {
+      'games': 'Игр', 
+      'wins': 'Побед', 
+      'kills': 'Убийств', 
+      'deaths': 'Смертей'
+    }, 
+    'tnttag': {
+      'games': 'Игр', 
+      'wins': 'Побед', 
+      'kills': 'Убийств'
+    }, 
+    'tntrun': {
+      'games': 'Игр', 
+      'wins': 'Побед', 
+      'broken_blocks': 'Блоков сломано', 
+      'brokenBlocks': 'Блоков сломано'
+    }, 
+    'luckywars': {
+      'games': 'Игр', 
+      'wins': 'Побед', 
+      'kills': 'Убийств', 
+      'deaths': 'Смертей', 
+      'lucky_blocks': 'Сломано лаки блоков', 
+      'damage': 'Урона нанесено', 
+      'luckyBlocks': 'Сломано лаки блоков'
+    }, 
+    'zombieclaus': {
+      'games': 'Игр', 
+      'wins': 'Побед', 
+      'kills': 'Убийств', 
+      'gifts': 'Подарков'
+    }, 'hide': {
+      'games': 'Игр', 
+      'total_wins': 'Всего побед', 
+      'wins_as_seeker': 'Побед за искателя', 
+      'wins_as_hider': 'Побед прячущимся', 
+      'kills': 'Убийств'
+    }, 
+    'speedbuilders': {
+      'games': 'Игр', 
+      'wins': 'Побед', 
+      'round': 'Раундов'
+    }, 
+    'fallguys': {
+      'games': 'Игр', 
+      'wins': 'Побед'
+    }, 
+    'teamfortress': {
+      'games': 'Игр', 
+      'wins': 'Побед', 
+      'kills': 'Убийств', 
+      'deaths': 'Смертей'
+    }, 'eggwars': {
+      'games': 'Игр', 
+      'wins': 'Побед', 
+      'kills': 'Убийств', 
+      'deaths': 'Смертей', 
+      'assists': 'Помощь в убийстве', 
+      'monsters': 'Убито мобов'
+    }
+  }, 
+  'ranks': {
+    'player': {
+      'name': 'Игрок', 
+      'prefix': ''
+    }, 
+    'vip': {
+      'name': 'VIP', 
+      'prefix': 'V'
+    }, 
+    'premium': {
+      'name': 'Premium', 
+      'prefix': 'P'
+    }, 
+    'holy': {
+      'name': 'Holy', 
+      'prefix': 'H'
+    }, 
+    'immortal': {
+      'name': 'Immortal', 
+      'prefix': 'I'
+    }, 
+    'builder': {
+      'name': 'Билдер', 
+      'prefix': 'Билдер'
+    }, 
+    'srbuilder': {
+      'name': 'Проверенный билдер', 
+      'prefix': 'Пр. билдер'
+    }, 
+    'maplead': {
+      'name': 'Главный билдер', 
+      'prefix': 'Гл. билдер'
+    }, 
+    'youtube': {
+      'name': 'YouTube', 
+      'prefix': 'YouTube'
+    }, 
+    'dev': {
+      'name': 'Разработчик', 
+      'prefix': 'Dev'
+    }, 
+    'organizer': {
+      'name': 'Организатор', 
+      'prefix': 'Организатор'
+    }, 
+    'moder': {
+      'name': 'Модератор', 
+      'prefix': 'Модер'
+    }, 
+    'warden': {
+      'name': 'Проверенный модератор', 
+      'prefix': 'Модер'
+    }, 
+    'chief': {
+      'name': 'Главный модератор', 
+      'prefix': 'Гл. модер'
+    }, 
+    'admin': {
+      'name': 'Главный админ', 
+      'prefix': 'Гл. админ'
+    }
+  },
+  'minecraft_colors': {
+    'dark_red': '4',
+    'red': 'c',
+    'gold': '6',
+    'yellow': 'e',
+    'dark_green': '2',
+    'greean': 'a',
+    'aqua': 'b',
+    'dark_aqua': '3',
+    'dark_blue': '1',
+    'blue': '9',
+    'light_purple': 'd',
+    'dark_purple': '5',
+    'white': '4',
+    'dark_red': 'f',
+    'gray': '7',
+    'dark_gray': '8',
+    'black': '0'
+  },
+  'lb_sort': {
+    'level': 'Уровень',
+    'online': 'Онлайн',
+    'kills': 'Убийств',
+    'wins': 'Побед',
+    'bedBreaked': 'Кроватей сломано',
+    'total_wins': 'Всего побед',
+    'total_games': 'Всего игр',
+    'rate': 'Рейтинг',
+    'points': 'Очков',
+    'total_blocks': 'Всего блоков',
+    'earned_money': 'Заработано монет',
+    'wins_as_maniac': 'Побед за Маньяка',
+    'tamed_sheep': 'Перетащено овец'
+  },
+  'lb_name': {
+    'user': 'Общий топ игроков',
+    'user_daily': 'Общий топ игроков (за день)',
+    'guild': 'Топ гильдий',
+    'ann': 'Топ игроков на Annihilation',
+    'ann_monthly': 'Топ игроков на Annihilation (в этом месяце)',
+    'bb': 'Топ игроков на BuildBattle',
+    'bb_monthly': 'Топ игроков на BuildBattle (в этом месяце)',
+    'bp': 'Топ игроков на BlockParty',
+    'bp_monthly': 'Топ игроков на BlockParty (в этом месяце)',
+    'bw': 'Топ игроков на BedWars',
+    'bw_monthly': 'Топ игроков на BedWars (в этом месяце)',
+    'bwt': 'Топ игроков на BedWars Turbo',
+    'bwt_monthly': 'Топ игроков на BedWars Turbo (в этом месяце)',
+    'cp': 'Топ игроков на ClashPoint',
+    'cp_monthly': 'Топ игроков на ClashPoint (в этом месяце)',
+    'dr': 'Топ игроков на DeathRun',
+    'dr_monthly': 'Топ игроков на DeathRun (в этом месяце)',
+    'duels': 'Топ игроков на Duels',
+    'duels_monthly': 'Топ игроков на Duels (в этом месяце)',
+    'gg': 'Топ игроков на GunGame',
+    'gg_monthly': 'Топ игроков на GunGame (в этом месяце)',
+    'hg': 'Топ игроков на HungerGames',
+    'hg_monthly': 'Топ игроков на HungerGames (в этом месяце)',
+    'kpvp': 'Топ игроков на KitPvP',
+    'kpvp_monthly': 'Топ игроков на KitPvP (в этом месяце)',
+    'mw': 'Топ игроков на MobWars',
+    'mw_monthly': 'Топ игроков на MobWars (в этом месяце)',
+    'prison': 'Топ игроков на Prison',
+    'prison_season': 'Топ игроков на Prison (в этом сезоне)',
+    'sw': 'Топ игроков на SkyWars',
+    'sw_monthly': 'Топ игроков на SkyWars (в этом месяце)',
+    'arc': 'Топ игроков на Аркадах',
+    'arc_monthly': 'Топ игроков на Аркадах (в этом месяце)',
+    'bridge': 'Топ игроков на The Bridge',
+    'jumpleague': 'Топ игроков на Jump League',
+    'murder': 'Топ игроков на Murder Mystery',
+    'sheep': 'Топ игроков на SheepWars',
+    'tntrun': 'Топ игроков на TNT Run',
+    'tnttag': 'Топ игроков на TNT Tag',
+    'turfwars': 'Топ игроков на Turf Wars',
+    'luckywars': 'Топ игроков на Lucky Wars',
+    'hide': 'Топ игроков на Hide and Seek',
+    'speedbuilders': 'Топ игроков на Speed Builders',
+    'teamfortress': 'Топ игроков на Team Fortress',
+    'eggwars': 'Топ игроков на Egg Wars',
+    'user_daily': 'Общий топ игроков (за день)'
+  },
+  'lb_list': {
+    'user': {
+      'main': ['level', 'online'],
+      'daily': ['xp', 'online', 'games', 'wins']
+    },
+    'guild': {
+      'main': ['level', 'total_coins']
+    },
+    'ann': {
+      'main': ['kills'],
+      'season': ['kills']
+    },
+    'arc': {
+      'main': ['wins'],
+      'season': ['wins']
+    },
+    'bb': {
+      'main': ['wins'],
+      'season': ['wins']
+    },
+    'bp': {
+      'main': ['wins'],
+      'season': ['wins']
+    },
+    'bridge': {
+      'main': ['wins','kills','points']
+    },
+    'bw': {
+      'main': ['wins', 'kills', 'bedBreaked'],
+      'season': ['wins', 'kills']
+    },
+    'bwt': {
+      'main': ['wins', 'kills', 'bedBreaked'],
+      'season': ['wins', 'kills']
+    },
+    'cp': {
+      'main': ['wins', 'kills'],
+      'season': ['wins', 'kills']
+    },
+    'dr': {
+      'main': ['wins'],
+      'season': ['wins']
+    },
+    'duels': {
+      'main': ['total_wins', 'total_games'],
+      'season': ['rate', 'total_wins']
+    },
+    'eggwars': {
+      'main': ['wins', 'kills']
+    },
+    'gg': {
+      'main': ['wins', 'kills'],
+      'season': ['wins', 'kills']
+    },
+    'hg': {
+      'main': ['wins'],
+      'season': ['wins']
+    },
+    'hide': {
+      'main': ['total_wins', 'kills']
+    },
+    'jumpleague': {
+      'main': ['wins', 'kills']
+    },
+    'kpvp': {
+      'main': ['points', 'kills'],
+      'season': ['kills']
+    },
+    'luckywars': {
+      'main': ['wins', 'kills']
+    },
+    'murder': {
+      'main': ['wins_as_maniac', 'total_wins', 'kills']
+    },
+    'mw': {
+      'main': ['wins'],
+      'season': ['wins']
+    },
+    'prison': {
+      'main': ['total_blocks', 'kills'],
+      'season': ['earned_money', 'total_blocks', 'kills']
+    },
+    'sheep': {
+      'main': ['wins', 'kills', 'tamed_sheep']
+    },
+    'speedbuilders': {
+      'main': ['wins']
+    },
+    'sw': {
+      'main': ['wins', 'kills'],
+      'season': ['wins', 'kills']
+    },
+    'teamfortress': {
+      'main': ['wins', 'kills']
+    },
+    'tntrun': {
+      'main': ['wins']
+    },
+    'tnttag': {
+      'main': ['wins', 'kills']
+    },
+    'turfwars': {
+      'main': ['wins', 'kills']
+    }
+  },
+  'blocks': {
+    '1': 'Камень',
+    '3': 'Земля',
+    '12': 'Песок',
+    '13': 'Гравий',
+    '14': 'Золотая руда',
+    '15': 'Железная руда',
+    '16': 'Угольная руда',
+    '17': 'Дуб',
+    '22': 'Блок Лазурита',
+    '23': 'Раздатчик',
+    '24': 'Песчаник',
+    '29': 'Липкий поршень',
+    '30': 'Паутина',
+    '33': 'Поршень',
+    '35': 'Белая шерсть',
+    '41': 'Золотой блок',
+    '42': 'Железный блок',
+    '43': 'Каменная плита',
+    '45': 'Кирпичи',
+    '48': 'Замшелый булыжник',
+    '49': 'Обсидиан',
+    '56': 'Алмазная руда',
+    '57': 'Алмазный блок',
+    '73': 'Редстоуновая руда',
+    '79': 'Лед',
+    '80': 'Блок снега',
+    '86': 'Тыква',
+    '87': 'Адский камень',
+    '88': 'Песок душ',
+    '89': 'Светокамень',
+    '103': 'Арбуз',
+    '118': 'Котел',
+    '121': 'Эндерняк',
+    '129': 'Изумрудная руда',
+    '133': 'Изумрудный блок',
+    '152': 'Блок редстоуна',
+    '153': 'Кварцевая руда',
+    '155': 'Блок кварца',
+    '158': 'Выбрасыватель',
+    '162': 'Акация',
+    '168': 'Призмарин',
+    '170': 'Стог сена',
+    '172': 'Обожженная глина',
+    '173': 'Блок Угля',
+    '174': 'Твердый лед',
+    '179': 'Красный песчаник',
+    '198': 'Эндер стержень',
+    '201': 'Пурпурный блок',
+    '202': 'Пурпурная колонна',
+    '216': 'Костный блок',
+    '251': 'Белый бетон',
+    '252': 'Белый сухой бетон',
+    '159:14': 'Красная обожженная глина',
+    '17:3': 'Тропическое дерево',
+    '159:5': 'Лаймовая обожженная глина',
+    '17:1': 'Ель',
+    '159:1': 'Оранжевая обожженная глина',
+    '168:2': 'Темный призмарин',
+    '168:1': 'Призмариновые кирпичи',
+    '252:9': 'Бирюзовый сухой бетон',
+    '98:3': 'Резные каменные кирпичи',
+    '98:2': 'Потресканные каменные кирпичи',
+    '98:1': 'Замшелые каменные кирпичи',
+    '1:5': 'Андезит',
+    '1:1': 'Гранит',
+    '95:10': 'Фиолетовое стекло',
+    '179:1': 'Резной красный песчаник',
+    '12:1': 'Красный песок',
+    '95:2': 'Пурпурное стекло',
+    '251:8': 'Бирюзовый бетон',
+    '155:2': 'Кварцевая колонна',
+    '155:1': 'Резной кварц',
+    '24:2': 'Гладкий песчаник',
+    '24:1': 'Резной песчаник',
+    '162:3': 'Искаженная ножка',
+    '162:2': 'Багровая ножка',
+    '252:15': 'Черный сухой бетон',
+    '252:14': 'Красный сухой бетон',
+    '252:13': 'Зеленый сухой бетон',
+    '252:11': 'Синий сухой бетон',
+    '252:10': 'Фиолетовый сухой бетон',
+    '252:8': 'Светло-серый сухой бетон',
+    '252:7': 'Серый сухой бетон',
+    '252:6': 'Розовый сухой бетон',
+    '252:5': 'Лаймовый сухой бетон',
+    '252:4': 'Желтый сухой бетон',
+    '252:3': 'Голубой сухой бетон',
+    '252:2': 'Пурпурный сухой бетон',
+    '252:1': 'Оранжевый сухой бетон',
+    '1:3': 'Диорит',
+    '252:12': 'Коричневый сухой бетон',
+    '35:13': 'Зеленая шерсть',
+    '95': 'Белое стекло',
+    '98': 'Каменные кирпичи',
+    '18': 'Дубовая листва',
+    '11': 'Лава'
+  }
+}

@@ -1,7 +1,8 @@
 import requests
-from player import Player, Session, Achievement, Stream
-from game import Match, FullMatch, GameStat, Map
-from guild import GuildSearch, Guild
+from vime_api.player import Player, Session, Achievement, Stream
+from vime_api.game import Match, FullMatch, GameStat, Map
+from vime_api.guild import Guild
+from vime_api.guild_search import GuildSearch
 
 api = 'https://api.vimeworld.ru'
 
