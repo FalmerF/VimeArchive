@@ -5,6 +5,8 @@ __pycache__/
 
 keys.py
 data/
+user_lb.db
+users.db
 
 # C extensions
 *.so
