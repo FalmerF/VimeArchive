@@ -166,12 +166,3 @@ def get_locale(path='locale.txt'):
 	locale = ast.literal_eval(f.read())
 	f.close()
 	return locale
-
-def get_black_list(path='black_list.txt'):
-	f = open(path, "r", encoding="utf-8")
-	data = f.read().split(',')
-	black_list = []
-	for d in data:
-		black_list.append(int(d))
-	f.close()
-	return black_list

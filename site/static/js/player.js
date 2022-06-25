@@ -22,9 +22,6 @@ async function init() {
 		leaderboard_list.set(value.get('type'), value);
 	});
 
-	response = await fetch("/api/black_list");
-	black_list = json_to_map(await response.json()).get('ids');
-
     var player = null;
     if (player_data.get('error') != null || player_data.size == 0) {
     	document.getElementById("not-found").style.visibility = "unset";
@@ -33,12 +30,6 @@ async function init() {
     }
     else
     	player = player_data.get('0');
-
-    if(Array.from(black_list.values()).includes(player.get('id'))) {
-    	document.getElementById("black-list").style.visibility = "unset";
-    	document.getElementById('page-content').style.visibility = 'hidden';
-    	return;
-    }
 
     response = await fetch("https://api.vimeworld.ru/user/"+player.get('id')+"/session");
 	var session = json_to_map(await response.json()).get('online');

@@ -25,7 +25,6 @@ log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
 vime = Vime()
-black_list = utils.get_black_list('../black_list.txt')
 locale = utils.get_locale('../locale.txt')
 lb_data = {}
 last_status = []
@@ -232,11 +231,6 @@ def api_locale(locales):
 	for loc in locale_arr:
 		locale_result[loc] = locale[loc]
 	return locale_result
-
-@app.route('/api/black_list') 
-def api_black_list():
-	trigger_analytics('a_black_list')
-	return {'ids': black_list}
 
 async def update_cycle():
 	global analytics
