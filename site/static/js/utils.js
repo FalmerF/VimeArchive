@@ -57,6 +57,7 @@ function send_notify(message) {
 		notify_div.remove();
 	}, 8000, notify);
 }
+
 function json_to_map(json) {
 	var map = new Map();
 	var json_map = new Map(Object.entries(json));
@@ -67,6 +68,16 @@ function json_to_map(json) {
 			map.set(key, value);
 	});
 	return map;
+}
+function mapToObj(map) {
+	const obj = {};
+	for (let [k,v] of map) {
+		if(v != null && v instanceof Map)
+			obj[k] = mapToObj(v);
+		else
+	  		obj[k] = v;
+	}
+	return obj
 }
 
 var statusUserRegex = new RegExp("(@[A-Za-z0-9_]{3,16})", "g");

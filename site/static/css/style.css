@@ -80,37 +80,60 @@ textarea::-webkit-scrollbar, div::-webkit-scrollbar {
     width: 5px;
     margin-left: 10px;
 }
-
 textarea::-webkit-scrollbar-track, div::-webkit-scrollbar-track {
     border-radius: 10px;
 }
-
 textarea::-webkit-scrollbar-thumb, div::-webkit-scrollbar-thumb  {
     border-radius: 10px;
     background-color: #57F287;
 }
+textarea::-webkit-scrollbar-thumb:hover, div::-webkit-scrollbar-thumb:hover  {
+    background-color: var(--primary-color);
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+	background-color: rgba(0, 0, 0, 0.4);
+}
+::-webkit-scrollbar-thumb  {
+    border-radius: 10px;
+    background-color: #57F287;
+}
+::-webkit-scrollbar-thumb:hover  {
+    background-color: var(--primary-color);
+}
+
 a {
 	text-decoration: none;
 }
 .header {
 	z-index: 5;
 	width: 100%;
-	height: 4em;
+	min-height: 4em;
 	background-color: var(--surface-color);
 	padding: 0.7em;
 	padding-left: 1em;
 	padding-right: 2em;
+	padding-bottom: 0;
+	display: flex;
+	flex-wrap: wrap;
 }
 @keyframes header-in {
     from { opacity: 0; margin-top: -4em;}
     to   { opacity: 1;}
 }
-.header input {
-	width: 12em;
+.header-search-input {
+	width: auto;
+	height: auto;
+	max-width: 12em;
 	border-radius: 0.5em;
 	color: var(--text-color);
 	border: none;
 	padding: 0.5em;
+	margin-bottom: 0.5em;
 	font-family: var(--bs-body-font-family);
 	float: left;
 	background: url(/static/svg/search.svg) no-repeat 0.4em;
@@ -119,14 +142,25 @@ a {
 	background-color: var(--background-color);
 	transition: all.5s ease;
 }
-.header input:focus {
+.header-search-input:focus {
 	transition: all.5s ease;
-	width: 15em;
+	max-width: 15em;
 }
-.banner-img{
+.vimearchive-banner {
+	display: block;
 	width: 214px;
 	height: 40px;
 	margin-right: 1em;
+	margin-bottom: 0.5em;
+}
+.vimearchive-banner img {
+	max-width: 100%;
+	max-height: 100%;
+}
+.header-buttons-section {
+	display: flex;
+	flex-grow: 1;
+	margin-bottom: 0.5em;
 }
 .loading {
 	position: fixed;
@@ -181,11 +215,11 @@ a {
 @keyframes loading-in {
 	from {
 		visibility: unset;
-	opacity: 0;
+		opacity: 0;
 	}
 	to {
 		visibility: unset;
-	opacity: 1;
+		opacity: 1;
 	}
 }
 @keyframes loading-out {
@@ -229,8 +263,9 @@ a {
 	float: left;
 }
 .header-button {
-	margin-left: 1.5em;
+	margin-left: 0.5em;
 	margin-top: -0.25em;
+	position: relative;
 }
 .default-button {
 	width: 3em;
@@ -288,6 +323,21 @@ a {
 	opacity: 1;
 	filter: invert(48%) sepia(13%) saturate(3207%) hue-rotate(10deg) contrast(150%) brightness(1.5);
 }
+.header-ranks {
+	margin-left: 0.5em;
+	margin-top: 0.5em;
+	width: 34px;
+	height: 34px;
+	opacity: 0.5;
+	float: left;
+	filter: contrast(0%) brightness(1.9);
+	transition: all.5s ease;
+}
+.header-button:hover .header-ranks {
+	transition: all.5s ease;
+	opacity: 1;
+	filter: invert(48%) sepia(13%) saturate(2500%) hue-rotate(180deg) contrast(100%) brightness(1.5);
+}
 .header-admin {
 	margin-left: 0.4em;
 	margin-top: 0.4em;
@@ -326,19 +376,6 @@ a {
 	transition: all.5s ease;
 }
 .header-button:hover .header-head {
-	transition: all.5s ease;
-	opacity: 1;
-}
-.header-button span {
-	color: var(--text-color);
-	font-weight: bold;
-	font-size: 1.25em;
-	float: left;
-	margin-left: 0.7em;
-	opacity: 0.5;
-	transition: all.5s ease;
-}
-.header-button:hover span {
 	transition: all.5s ease;
 	opacity: 1;
 }
@@ -477,4 +514,47 @@ a {
 	to {
 		right: -20em;
 	}
+}
+.tooltip {
+	display: inline;
+	position: absolute;
+	width: max-content;
+	padding: 0.5em;
+	z-index: 1;
+	border-radius: 0.5em;
+	background-color: var(--surface-color);
+	box-shadow: 0 0 0.5em rgba(0,0,0,0.8);
+	color: var(--text-color);
+	font-weight: bold;
+	opacity: 0;
+	visibility: hidden;
+	transition: all.2s ease;
+}
+.bottom-tooltip {
+	top: calc(130% + 1em);
+}
+.top-tooltip {
+	bottom: calc(130% + 1em);
+}
+.right-tooltip {
+	left: calc(130% + 1em);
+}
+.left-tooltip {
+	right: calc(130% + 1em);
+}
+.header-button:hover .bottom-tooltip {
+	transition: all.2s ease;
+	opacity: 1;
+	top: 130%;
+	visibility: visible;
+}
+.tooltip-to-right {
+	left: 0;
+}
+.tooltip-to-left {
+	right: 0;
+}
+.tooltip-to-center {
+	left: 50%;
+	right: 50%;
 }

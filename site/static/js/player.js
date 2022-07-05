@@ -48,7 +48,7 @@ async function init() {
 		offline_time = Math.floor(new Date().getTime()/1000)-player.get('lastSeen');
 		player_status.innerHTML = 'Оффлайн '+formate_time(offline_time);
 		tooltip = document.createElement('span');
-		tooltip.className = 'status-tooltip';
+		tooltip.className = 'tooltip right-tooltip';
 		tooltip.innerHTML = new Date(player.get('lastSeen') * 1000).toLocaleDateString("ru-RU", {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'});
 		player_status.append(tooltip);
 	}
@@ -56,8 +56,7 @@ async function init() {
 	formated_percent = Math.round(player.get('levelPercentage')*100);
 	xp_to_level = 8000+((player.get('level')-1)*2000);
 
-	document.getElementById("user-head-first").src = "https://skin.vimeworld.ru/head/"+username+".png";
-	document.getElementById("user-head-second").style.backgroundImage = "url('https://skin.vimeworld.ru/raw/skin/"+username+".png')";
+	document.getElementById("user-head-img").src = "https://skin.vimeworld.ru/helm/"+username+".png";
 	document.getElementById("card-title-top").innerHTML = username + ' [<span id="rank-text" style="color: var(--'+rank+'-rank-color);">'+rank_name+'</span>]';
 	document.getElementById("card-title-id").innerHTML = "ID: "+user_id;
 	document.getElementById("xp-level").innerHTML = player.get('level')+' ур. <span class="xp-percent">('+formated_percent+'%)</span>';
@@ -100,17 +99,9 @@ async function init() {
 	friends.forEach(async (friend) => {
 		make_friend(friend);
 	});
-	console.log(friends)
 	document.getElementById('player-info-header').innerHTML += '<span>Друзей '+(friends.size == null ? friends.length : friends.size)+'</span>';
 
 	load_player_stats();
-
-	get_actions_div();
-	today = new Date();
-	current_date = today.getDate()+'.'+(today.getMonth()+1)+'.'+today.getFullYear();
-	await get_actions(user_id, current_date,current_date)
-	make_100_actions();
-	await make_lb_main(user_id);
 }
 function post_init() {
 	document.getElementById("stats-loading").style.animation = 'out-stats-loading 0.5s';
@@ -843,8 +834,6 @@ $(function() {
   	end = picker.endDate;
   	can_change_filter = false;
 
-  	document.getElementById("loading").style.animation = 'loading-in 0.5s';
-  	document.getElementById("loading").style.visibility = 'unset';
   	select_header_button(null);
 
   	try {
@@ -882,11 +871,7 @@ $(function() {
     make_100_actions();
     make_lb(lb);
 	
-	setTimeout(() => {
-		can_change_filter = true;
-		document.getElementById("loading").style.animation = 'loading-out 0.5s';
-		document.getElementById("loading").style.visibility = 'hidden';
-	}, stat_elements_count*load_delay);
+	can_change_filter = true;
 });
 
 function header_button_click() {
@@ -908,9 +893,14 @@ async function load_player_stats(type='global') {
 	var player_data = json_to_map(await response.json());
 	var player_stats = player_data.get('stats');
 	var player = player_data.get('user');
+
+	var ranks = new Map();
+	if(type == 'global') {
+		response = await fetch("/api/"+user_id+"/ranks");
+		ranks = json_to_map(await response.json());
+	}
+
 	get_and_clear_stats_div();
-	// actions_div = document.getElementById('actions-div');
-	// if(actions_div != null) actions_div.remove();
 	update_top_stats(0, player.get('playedSeconds'));
 
 	var stats_div = document.getElementById("stats-place");
@@ -934,6 +924,14 @@ async function load_player_stats(type='global') {
     	game_name = locale.get('games').get(game.toLowerCase()).get('name');
 
     	stat_header.innerHTML = game_name;
+		if(ranks.get(game) != null && ranks.get(game).get('rank') != 'none') {
+			rank_div = document.createElement('div');
+			rank_div.className = 'stat-header-rank';
+			rank_div.innerHTML = '<img src="/static/svg/'+ranks.get(game).get('rank')+'_rank.svg">'
+			rank_div.innerHTML += '<span class="tooltip left-tooltip">'+ranks.get(game).get('points').toLocaleString(undefined, {})+' очков</span>'
+			stat_header.append(rank_div);
+		}
+
     	stat_div.append(stat_header);
     	stats_div.append(stat_div);
 
@@ -952,6 +950,13 @@ async function load_player_stats(type='global') {
 		stat_content.append(stat_row_place);
 		stat_div.append(stat_content);
 	});
+
+	get_actions_div();
+	today = new Date();
+	current_date = today.getDate()+'.'+(today.getMonth()+1)+'.'+today.getFullYear();
+	await get_actions(user_id, current_date,current_date)
+	make_100_actions();
+	await make_lb_main(user_id);
 }
 
 function start_edit_status() {

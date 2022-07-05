@@ -4,7 +4,6 @@ import os, sys
 import time
 import threading
 import __main__
-import requests
 import random
 import string
 import asyncio
@@ -15,6 +14,7 @@ sys.path.insert(1, os.path.abspath('../vime_api'))
 import data_base
 import vime
 import utils
+import rank_calc
 from utils import cls
 from vime import Vime, VimeError
 import logging
@@ -61,6 +61,12 @@ def admin():
 		return render_template('admin.html', visitors=v_data, api=api_data, unique_visitors=len(unique_visitors))
 	return {'error': '\_(^_^)_/'}
 
+@app.route('/ranks_guide') 
+def ranks_guide():
+	trigger_analytics('v_ranks_guide')
+	check_visitor((request.environ['HTTP_X_FORWARDED_FOR']) if 'HTTP_X_FORWARDED_FOR' in request.environ else (None))
+	return render_template('ranks_guide.html')
+
 @app.route('/auth') 
 def player_auth():
 	trigger_analytics('v_auth')
@@ -91,6 +97,25 @@ def api_player_info(id):
 		return {'error': 'No data'}
 	else:
 		return {'username': user.name, 'info': user.base_data}
+
+@app.route('/api/<int:player_id>/ranks')
+def api_player_ranks(player_id):
+	try:
+		data = asyncio.run(user_manager.users_DB.get_async('points', '*', f'id={player_id}'))
+		if data == None: return {}
+		ranks = ast.literal_eval(data[2])
+		points = ast.literal_eval(data[1])
+
+		result = {}
+		for game in points:
+			try:
+				result[game] = {'rank': ranks[game], 'points': points[game]}
+			except ValueError:
+				pass
+
+		return result
+	except:
+		return {}
 
 @app.route('/api/player/status', methods=['POST'])
 def api_player_status():
@@ -210,7 +235,7 @@ def api_leaderboard(table: str):
 	trigger_analytics('a_lb')
 
 	try:
-		return lb_data[table]
+		return lb_data[f'{table}_top']
 	except:
 		return {}
 
@@ -239,22 +264,23 @@ async def update_cycle():
 
 	date = datetime.now()
 	while True:
-		try:
-			if date.day != datetime.now().day:
-				date = datetime.now()
-				analytics = {'v': 0, 'a': 0, 'v_main': 0, 'v_player': 0, 'v_lb': 0}
-				unique_visitors = []
-			DB = data_base.DataBase('', file_name='../user_lb.db')
-			lb_data['xp'] = await make_top_list(DB, 'xp')
-			lb_data['online'] = await make_top_list(DB, 'online')
-			lb_data['games'] = await make_top_list(DB, 'games')
-			lb_data['wins'] = await make_top_list(DB, 'wins')
-			time.sleep(600)
-		except:
-			time.sleep(10)
+		if date.day != datetime.now().day:
+			date = datetime.now()
+			analytics = {'v': 0, 'a': 0, 'v_main': 0, 'v_player': 0, 'v_lb': 0}
+			unique_visitors = []
+
+		DB = data_base.DataBase('', file_name='../user_lb.db')
+
+		lb_list = await DB.get_tables_list_async()
+		for d in lb_list:
+			lb_name = d[0]
+			if lb_name == 'daily_activity': continue
+			lb_data[lb_name] = await make_top_list(DB, lb_name)
+
+		time.sleep(600)
 
 async def make_top_list(DB, table):
-	data = await DB.get_async(table+'_top', '*', type='all')
+	data = await DB.get_async(table, '*', type='all')
 	top_list = {}
 	num = 0
 	for d in data:

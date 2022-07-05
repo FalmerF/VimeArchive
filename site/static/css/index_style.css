@@ -4,8 +4,6 @@
 	bottom: 3em;
 	color: white;
 }
-.discord-widget:hover {
-}
 .widget-panel {
 	position: absolute;
 	right: -1em;
@@ -58,41 +56,22 @@
 	transition: all.3s ease;
 	transform: rotate(-360deg);
 }
-/*.discord-logo:hover {
-	transition: all.3s ease;
-	filter: drop-shadow(0 0 0.5em #5865F2);
-}*/
-.site-info {
-	position: absolute;
-	left: 10%;
-	top: 90%;
-	width: 80%;
-	padding: 1em;
-	padding-bottom: 5em;
-	background-color: var(--surface-color);
-	border-radius: var(--border-radius);
-	text-align: center;
-}
-.site-info h3 {
-	font-size: 1.3em;
-}
-.site-info span {
-	margin-left: 2em;
-}
-.site-info div {
-	text-align: left;
-}
 .center-div {
 	width: fit-content;
 	margin: auto;
 	height: 3em;
 	margin-top: 17em;
 }
-.center-div img{
+.center-div img {
 	float: left;
 	width: 40px;
 	height: 40px;
 	margin-right: 0.5em;
+	cursor: pointer;
+}
+.center-div img:hover {
+	transform: scale(1.1);
+	filter: drop-shadow(0.1em 0.1em 0.2em #000);
 }
 .center-div input {
 	float: left;
@@ -111,16 +90,11 @@
 	background-color: #2C2F33;
 }
 @keyframes logo-tap {
-  from {
-    margin-top: 0em;
+  from, to {
+    transform: translateY(0);
   }
-
   50% {
-  	margin-top: 0.5em;
-  }
-
-  to {
-    margin-top: 0em;
+	transform: translateY(0.5em);
   }
 }
 
@@ -136,6 +110,7 @@
 	opacity: 1;
 	width: 18em;
 	margin-left: 0;
+	animation: none;
 }
 .online-div:hover .online-title {
 	transition: all.3s ease;
@@ -146,17 +121,35 @@
 	border-bottom-right-radius: 0em;
 }
 .online-element {
-	opacity: 0;
+	opacity: 0.5;
 	background-color: var(--surface-color);
 	width: 18em;
-	margin-left: -2em;
+	/* margin-left: -2em; */
 	text-align: center;
 	padding-top: 0.2em;
+	animation: 5s online-el-pulse infinite;
+	animation-delay: calc(var(--i) * 0.3s);
 	transition: all.3s ease;
+}
+@keyframes online-el-pulse {
+	70%, 0% {
+		margin-left: 0;
+		background-color: var(--surface-color);
+	}
+	90% {
+		margin-left: 1em;
+		background-color: var(--surface-h-color);
+	}
+	100% {
+		margin-left: 0;
+		background-color: var(--surface-color);
+	}
 }
 .online-element:hover {
 	transition: all.3s ease;
 	background-color: var(--surface-h-color);
+	transform: scale(1.1);
+	border-radius: 0.5em;
 }
 .online-element span {
 	color: var(--green-color);

@@ -155,6 +155,9 @@ table {
 	margin-bottom: 1em;
 	margin-top: 0.5em;
 }
+.guild-level:hover {
+	background-color: var(--surface-h-color);
+}
 .guild-level-progress {
 	width: 59%;
 	height: 100%;
@@ -198,4 +201,8 @@ table {
 	font-size: 1.3em;
 	font-weight: bold;
 	text-align: center;
+}
+td a {
+	display: block;
+    width: fit-content;
 }

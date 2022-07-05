@@ -1,11 +1,10 @@
-import asyncio
-from datetime import datetime
-import threading
 import time
 import traceback
+from datetime import datetime
 from collector.leaderboards_collector import LeaderboardsCollector
 from collector.matches_collector import MatchesCollector
 from collector.players_collector import PlayersCollector
+from collector.rank_collector import RankCollector
 
 class MainCollector:
     def __init__(self, vime_archive, db, db_p) -> None:
@@ -22,10 +21,9 @@ class MainCollector:
         self.matches_collector = MatchesCollector(self)
         self.players_collector = PlayersCollector(self)
 
-        threading.Thread(target=self.run).start()
+        self.rank_collector = RankCollector(self)
 
-    def run(self) -> None:
-        asyncio.run(self.collect_cycle())
+        self.vime_archive.run_async_thread(self.collect_cycle())
 
     async def collect_cycle(self) -> None:
         while True:
@@ -42,7 +40,7 @@ class MainCollector:
                 self.exceptions.append(traceback.format_exc())
 
             dif = (datetime.now()-self.cycle_start_time).total_seconds()
-            self.waiting_time = 30 - dif
+            self.waiting_time = 60 - dif
             while self.waiting_time > 0:
                 self.status = f'Waiting {(int)(self.waiting_time)}s'
                 time.sleep(1)

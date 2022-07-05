@@ -13,7 +13,9 @@ class DataBase:
         self.update_list = []
         self.insert_list = []
         self.delete_list = []
+        self.execute_commands = []
         self.get_dict = {}
+        self.request_dict = {}
 
         if file_name is None:
             file_name = f'{os.path.dirname(__file__)}/data/{date}.db'
@@ -39,6 +41,10 @@ class DataBase:
     async def update_cycle(self):
         self.con = sqlite3.connect(self.file_name)
         while True:
+            while len(self.delete_list) > 0:
+                args = self.delete_list.pop(0)
+                self.delete(*args)
+
             while len(self.update_list) > 0:
                 args = self.update_list.pop(0)
                 self.update(*args)
@@ -47,14 +53,20 @@ class DataBase:
                 args = self.insert_list.pop(0)
                 self.insert(*args)
 
-            while len(self.delete_list) > 0:
-                args = self.delete_list.pop(0)
-                self.delete(*args)
+            while len(self.execute_commands) > 0:
+                command = self.execute_commands.pop(0)
+                self.con.cursor().execute(command)
 
-            for key in self.get_dict:
+            for key in list(self.get_dict.keys()):
                 if self.get_dict[key]['completed'] != True:
                     self.get_dict[key]['result'] = self.get(*self.get_dict[key]['args'])
                     self.get_dict[key]['completed'] = True
+
+            for key in list(self.request_dict.keys()):
+                if self.request_dict[key]['completed'] != True:
+                    self.request_dict[key]['result'] = self.con.cursor().execute(self.request_dict[key]['command']).fetchall()
+                    self.request_dict[key]['completed'] = True
+            self.con.commit()
             await asyncio.sleep(0.01)
 
     def close_con(self):
@@ -82,7 +94,6 @@ class DataBase:
 
     def update(self, table: str, updateData: str, condition: str):
         self.con.cursor().execute(f'UPDATE {table} SET {updateData} WHERE {condition}')
-        self.con.commit()
 
     def update_async(self, table: str, updateData: str, condition: str):
         self.update_list.append([table, updateData, condition])
@@ -92,19 +103,31 @@ class DataBase:
             self.con.cursor().execute(f'DELETE FROM {table}')
         else:
             self.con.cursor().execute(f'DELETE FROM {table} WHERE {condition}')
-        self.con.commit()
 
     def delete_async(self, table: str, condition=''):
         self.delete_list.append([table, condition])
 
     def insert(self, table: str, values: str):
         self.con.cursor().execute(f'INSERT INTO {table} VALUES ({values})')
-        self.con.commit()
 
     def insert_async(self, table: str, values: str):
         self.insert_list.append([table, values])
 
-    def getTablesList(self):
+    def get_tables_list(self):
         cursor = self.con.cursor()
         cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
         return cursor.fetchall()
+
+    async def request_command(self, command):
+        key = str(randrange(10000000))
+        self.request_dict[key] = {'completed': False, 'command': command}
+        while True:
+            if self.request_dict[key]['completed'] == True:
+                return self.request_dict.pop(key)['result']
+            await asyncio.sleep(0.01)
+
+    def execute_command(self, command):
+        self.execute_commands.append(command)
+
+    async def get_tables_list_async(self):
+        return await self.request_command("SELECT name FROM sqlite_master WHERE type='table';")

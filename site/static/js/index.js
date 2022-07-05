@@ -61,9 +61,13 @@ async function init() {
 	online_el = document.createElement('div');
 	online_el.innerHTML = 'Онлайн: <span>'+online_data.get('total')+'</span>';
 	online_el.className = 'online-title online-element'
+	online_el.style.cssText = "--i: 0";
 	online_div.append(online_el);
 
+	index = 0;
+
 	online_data.get('separated').forEach(async (value, key) => {
+		index++;
 		game_name = '';
 		if(key == 'lobby') game_name = 'Лобби';
 		else {
@@ -77,6 +81,7 @@ async function init() {
 		online_el = document.createElement('div');
 		online_el.innerHTML = ''+game_name+': <span>'+value+'</span>';
 		online_el.className = 'online-element'
+		online_el.style.cssText = "--i: "+index;
 		online_div.append(online_el);
 	});
 }

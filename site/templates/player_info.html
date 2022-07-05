@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=0.7, shrink-to-fit=yes">
 		<title>{{username}} - VimeArchive</title>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
@@ -16,7 +17,6 @@
 		<link rel="stylesheet" href="/static/css/player_style.css" id='style-href'>
 		<link href="/static/svg/logo.svg" rel="shortcut icon" type="image/x-icon" />
 		<script>username = '{{username}}';</script>
-		<!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
 	</head>
 	<body>
 
@@ -24,11 +24,9 @@
 		<div id="page-content">
 			<div id="top" style="visibility: hidden;">
 				<div class="player-card" id="player-card">
-					<!-- <div class="player-status-div" id="player-status-div"><div>This is test status to view functional. Это тестовый статус для просмотра фунционала. This is test status to view functional. Это тестовый статус для просмотра фунционала.</div></div> -->
 					<div class="card-content">
 						<div class="user-head">
-							<img class="user-head-first" id="user-head-first">
-							<div class="user-head-second" id="user-head-second"></div>
+							<img class="user-head-img" id="user-head-img">
 						</div>
 						<div class="card-title">
 							<span id="card-title-top" onclick="copy_text(username)"></span>
@@ -44,7 +42,7 @@
 						<span class="xp-level" id="xp-level">
 						<span class="xp-percent"></span></span>
 						<div class="xp-progress-bg">
-							<span class="xp-tooltip" id="xp-tooltip"></span>
+							<span class="tooltip top-tooltip tooltip-to-center" id="xp-tooltip"></span>
 						</div>
 						<div class="xp-progress" id="xp-progress"></div>
 					</div>
@@ -75,6 +73,18 @@
 				<div class="stats-place-top" id="stats-place-top"></div>
 			</div>
 			<div class="data-place" id="data-place">
+				<div class="stats-div" id='stats-div'>
+					<div class="stats-div-header">
+						<span>Статистика</span>
+						<div class='stats-header-button hover-slide' id='header-main-button' data-tag='global' style='border-radius: 0.5em 0px 0px 0.5em;'>Основная</div>
+						<div class='stats-header-button hover-slide' id='header-season-button' data-tag='season' style='border-radius: 0px 0.5em 0.5em 0px;'>Сезонная</div>
+						<span>или</span>
+						<div class="date-picker-place" id="date-picker-place">
+							<input type="text" name="daterange" id="daterange"/>
+						</div>
+					</div>
+					<div class="stats-place" id='stats-place'></div>
+				</div>
 				<div class="data-left-panel">
 					<div class="actions-div" id="actions-div">
 						<div class="match-info-div" id="match-info-div"></div>
@@ -86,20 +96,6 @@
 						</div>
 						<div class="lb-place" id="lb-place"></div>
 					</div>
-				</div>
-				<div class="stats-div" id='stats-div'>
-					<div class="stats-div-header">
-						<div class="stats-header-body">
-							<span>Статистика</span>
-							<div class='stats-header-button hover-slide' id='header-main-button' data-tag='global' style='border-radius: 0.5em 0px 0px 0.5em;'>Основная</div>
-							<div class='stats-header-button hover-slide' id='header-season-button' data-tag='season' style='border-radius: 0px 0.5em 0.5em 0px;'>Сезонная</div>
-							<span>или</span>
-							<div class="date-picker-place" id="date-picker-place">
-								<input type="text" name="daterange" id="daterange"/>
-							</div>
-						</div>
-					</div>
-					<div class="stats-place" id='stats-place'></div>
 				</div>
 			</div>
 		</div>

@@ -107,18 +107,21 @@
       'ores': 'Руды выкопано', 
       'nexus': 'Урона по базе', 
       'digged': 'Земли выкопано', 
-      'games': 'Игр'
+      'games': 'Игр',
+      'rank_points': 'Очков ранга'
     }, 
     'bb': {
       'games': 'Игр', 
       'wins': 'Побед', 
-      'points': 'Очков набрано'
+      'points': 'Очков набрано',
+      'rank_points': 'Очков ранга'
     }, 
     'bp': {
       'games': 'Игр', 
       'wins': 'Побед', 
       'levels': 'Пройдено уровней', 
-      'aliveTime': 'Время жизни'
+      'aliveTime': 'Время жизни',
+      'rank_points': 'Очков ранга'
     }, 
     'bw': {
       'kills': 'Убийств', 
@@ -130,7 +133,8 @@
       'spentGold': 'Потрачено золота', 
       'spentBronze': 'Потрачено бронзы', 
       'spentIron': 'Потрачено железа', 
-      'brokenBeds': 'Кроватей сломано'
+      'brokenBeds': 'Кроватей сломано',
+      'rank_points': 'Очков ранга'
     }, 
     'bwt': {
       'kills': 'Убийств', 
@@ -138,7 +142,8 @@
       'games': 'Игр', 
       'wins': 'Побед', 
       'bedBreaked': 'Кроватей сломано',
-      'spent_coins': 'Потрачено монет'
+      'spent_coins': 'Потрачено монет',
+      'rank_points': 'Очков ранга'
     },
     'cp': {
       'kills': 'Убийств', 
@@ -147,11 +152,13 @@
       'wins': 'Побед', 
       'resourcePointsBreaked': 'Точек рес. сломано', 
       'spentGold': 'Потрачено золота', 
-      'rpBroken': 'Точек рес. сломано'
+      'rpBroken': 'Точек рес. сломано',
+      'rank_points': 'Очков ранга'
     }, 
     'dr': {
       'games': 'Игр', 
-      'wins': 'Побед'
+      'wins': 'Побед',
+      'rank_points': 'Очков ранга'
     }, 
     'duels': {
       'solo_wins': 'Одиночных побед', 
@@ -173,26 +180,30 @@
       'max_rate': 'Макс. рейтинг', 
       'wins': 'Всего побед', 
       'kills': 'Убийств', 
-      'games': 'Игр'
+      'games': 'Игр',
+      'rank_points': 'Очков ранга'
     }, 
     'gg': {
       'kills': 'Убийств', 
       'wins': 'Побед', 
       'games': 'Игр', 
-      'levels': 'Набрано уровней'
+      'levels': 'Набрано уровней',
+      'rank_points': 'Очков ранга'
     }, 
     'hg': {
       'kills': 'Убийств', 
       'wins': 'Побед', 
       'games': 'Игр', 
       'luckyBlocks': 'Сломано лаки блоков', 
-      'aliveTime': 'Время жизни'
+      'aliveTime': 'Время жизни',
+      'rank_points': 'Очков ранга'
     }, 
     'kpvp': {
       'kills': 'Убийств', 
       'deaths': 'Смертей', 
       'points': 'Очков', 
-      'games': 'Игр'
+      'games': 'Игр',
+      'rank_points': 'Очков ранга'
     }, 
     'mw': {
       'games': 'Игр', 
@@ -201,7 +212,8 @@
       'mobsSended': 'Послано мобов', 
       'maxIncome': 'Макс. доход', 
       'mobsSent': 'Послано мобов', 
-      'income': 'Доход'
+      'income': 'Доход',
+      'rank_points': 'Очков ранга'
     }, 
     'prison': {
       'total_blocks': 'Всего блоков', 
@@ -210,7 +222,8 @@
       'deaths': 'Смертей', 
       'mobs': 'Убито мобов', 
       'blocks': 'Сломанные блоки', 
-      'games': 'Игр'
+      'games': 'Игр',
+      'rank_points': 'Очков ранга'
     }, 
     'sw': {
       'wins': 'Побед', 
@@ -222,13 +235,15 @@
       'blocksPlaced': 'Блоков поставлено', 
       'currentWinStreak': 'Серия побед', 
       'winStreak': 'Побед подряд', 
-      'aliveTime': 'Время жизни'
+      'aliveTime': 'Время жизни',
+      'rank_points': 'Очков ранга'
     }, 
     'arc': {
       'games': 'Игр', 
       'wins': 'Побед', 
       'kills': 'Убийств', 
-      'deaths': 'Смертей'
+      'deaths': 'Смертей',
+      'rank_points': 'Очков ранга'
     }, 
     'bridge': {
       'games': 'Игр', 
@@ -236,7 +251,8 @@
       'kills': 'Убийств', 
       'deaths': 'Смертей', 
       'points': 'Очков', 
-      'damage': 'Урона нанесено'
+      'damage': 'Урона нанесено',
+      'rank_points': 'Очков ранга'
     }, 
     'jumpleague': {
       'games': 'Игр', 
@@ -244,7 +260,8 @@
       'kills': 'Убийств', 
       'deaths': 'Смертей', 
       'checkpoints': 'Чекпоинтов', 
-      'damage': 'Урона нанесено'
+      'damage': 'Урона нанесено',
+      'rank_points': 'Очков ранга'
     }, 
     'murder': {
       'games': 'Игр', 
@@ -254,31 +271,36 @@
       'wins_as_detective': 'Побед детективом', 
       'kills': 'Убийств', 'wins': 'Всего побед', 
       'collectedGold': 'Собрано золота',
-      'total_wins': 'Всего побед'
+      'total_wins': 'Всего побед',
+      'rank_points': 'Очков ранга'
     }, 
     'sheep': {
       'games': 'Игр', 
       'wins': 'Побед', 
       'kills': 'Убийств', 
       'deaths': 'Смертей',
-      'tamed_sheep': 'Перетащено овец'
+      'tamed_sheep': 'Перетащено овец',
+      'rank_points': 'Очков ранга'
     }, 
     'turfwars': {
       'games': 'Игр', 
       'wins': 'Побед', 
       'kills': 'Убийств', 
-      'deaths': 'Смертей'
+      'deaths': 'Смертей',
+      'rank_points': 'Очков ранга'
     }, 
     'tnttag': {
       'games': 'Игр', 
       'wins': 'Побед', 
-      'kills': 'Убийств'
+      'kills': 'Убийств',
+      'rank_points': 'Очков ранга'
     }, 
     'tntrun': {
       'games': 'Игр', 
       'wins': 'Побед', 
       'broken_blocks': 'Блоков сломано', 
-      'brokenBlocks': 'Блоков сломано'
+      'brokenBlocks': 'Блоков сломано',
+      'rank_points': 'Очков ранга'
     }, 
     'luckywars': {
       'games': 'Игр', 
@@ -287,41 +309,50 @@
       'deaths': 'Смертей', 
       'lucky_blocks': 'Сломано лаки блоков', 
       'damage': 'Урона нанесено', 
-      'luckyBlocks': 'Сломано лаки блоков'
+      'luckyBlocks': 'Сломано лаки блоков',
+      'rank_points': 'Очков ранга'
     }, 
     'zombieclaus': {
       'games': 'Игр', 
       'wins': 'Побед', 
       'kills': 'Убийств', 
-      'gifts': 'Подарков'
-    }, 'hide': {
+      'gifts': 'Подарков',
+      'rank_points': 'Очков ранга'
+    }, 
+    'hide': {
       'games': 'Игр', 
       'total_wins': 'Всего побед', 
       'wins_as_seeker': 'Побед за искателя', 
       'wins_as_hider': 'Побед прячущимся', 
-      'kills': 'Убийств'
+      'kills': 'Убийств',
+      'rank_points': 'Очков ранга'
     }, 
     'speedbuilders': {
       'games': 'Игр', 
       'wins': 'Побед', 
-      'round': 'Раундов'
+      'round': 'Раундов',
+      'rank_points': 'Очков ранга'
     }, 
     'fallguys': {
       'games': 'Игр', 
-      'wins': 'Побед'
+      'wins': 'Побед',
+      'rank_points': 'Очков ранга'
     }, 
     'teamfortress': {
       'games': 'Игр', 
       'wins': 'Побед', 
       'kills': 'Убийств', 
-      'deaths': 'Смертей'
-    }, 'eggwars': {
+      'deaths': 'Смертей',
+      'rank_points': 'Очков ранга'
+    }, 
+    'eggwars': {
       'games': 'Игр', 
       'wins': 'Побед', 
       'kills': 'Убийств', 
       'deaths': 'Смертей', 
       'assists': 'Помощь в убийстве', 
-      'monsters': 'Убито мобов'
+      'monsters': 'Убито мобов',
+      'rank_points': 'Очков ранга'
     }
   }, 
   'ranks': {
@@ -418,7 +449,8 @@
     'total_blocks': 'Всего блоков',
     'earned_money': 'Заработано монет',
     'wins_as_maniac': 'Побед за Маньяка',
-    'tamed_sheep': 'Перетащено овец'
+    'tamed_sheep': 'Перетащено овец',
+    'rank_points': 'Очков ранга'
   },
   'lb_name': {
     'user': 'Общий топ игроков',
@@ -474,103 +506,103 @@
       'daily': ['xp', 'online', 'games', 'wins']
     },
     'guild': {
-      'main': ['level', 'total_coins']
+      'main': ['level','total_coins']
     },
     'ann': {
-      'main': ['kills'],
+      'main': ['kills','rank_points'],
       'season': ['kills']
     },
     'arc': {
-      'main': ['wins'],
+      'main': ['wins','rank_points'],
       'season': ['wins']
     },
     'bb': {
-      'main': ['wins'],
+      'main': ['wins','rank_points'],
       'season': ['wins']
     },
     'bp': {
-      'main': ['wins'],
+      'main': ['wins','rank_points'],
       'season': ['wins']
     },
     'bridge': {
-      'main': ['wins','kills','points']
+      'main': ['wins','kills','points','rank_points']
     },
     'bw': {
-      'main': ['wins', 'kills', 'bedBreaked'],
+      'main': ['wins', 'kills', 'bedBreaked','rank_points'],
       'season': ['wins', 'kills']
     },
     'bwt': {
-      'main': ['wins', 'kills', 'bedBreaked'],
+      'main': ['wins', 'kills', 'bedBreaked','rank_points'],
       'season': ['wins', 'kills']
     },
     'cp': {
-      'main': ['wins', 'kills'],
+      'main': ['wins', 'kills', 'rank_points'],
       'season': ['wins', 'kills']
     },
     'dr': {
-      'main': ['wins'],
+      'main': ['wins', 'rank_points'],
       'season': ['wins']
     },
     'duels': {
-      'main': ['total_wins', 'total_games'],
+      'main': ['total_wins', 'total_games', 'rank_points'],
       'season': ['rate', 'total_wins']
     },
     'eggwars': {
-      'main': ['wins', 'kills']
+      'main': ['wins', 'kills', 'rank_points']
     },
     'gg': {
-      'main': ['wins', 'kills'],
+      'main': ['wins', 'kills', 'rank_points'],
       'season': ['wins', 'kills']
     },
     'hg': {
-      'main': ['wins'],
+      'main': ['wins', 'rank_points'],
       'season': ['wins']
     },
     'hide': {
-      'main': ['total_wins', 'kills']
+      'main': ['total_wins', 'kills', 'rank_points']
     },
     'jumpleague': {
-      'main': ['wins', 'kills']
+      'main': ['wins', 'kills', 'rank_points']
     },
     'kpvp': {
-      'main': ['points', 'kills'],
+      'main': ['points', 'kills', 'rank_points'],
       'season': ['kills']
     },
     'luckywars': {
-      'main': ['wins', 'kills']
+      'main': ['wins', 'kills', 'rank_points']
     },
     'murder': {
-      'main': ['wins_as_maniac', 'total_wins', 'kills']
+      'main': ['wins_as_maniac', 'total_wins', 'kills', 'rank_points']
     },
     'mw': {
-      'main': ['wins'],
+      'main': ['wins', 'rank_points'],
       'season': ['wins']
     },
     'prison': {
-      'main': ['total_blocks', 'kills'],
+      'main': ['total_blocks', 'kills', 'rank_points'],
       'season': ['earned_money', 'total_blocks', 'kills']
     },
     'sheep': {
-      'main': ['wins', 'kills', 'tamed_sheep']
+      'main': ['wins', 'kills', 'tamed_sheep', 'rank_points']
     },
     'speedbuilders': {
-      'main': ['wins']
+      'main': ['wins', 'rank_points']
     },
     'sw': {
-      'main': ['wins', 'kills'],
+      'main': ['wins', 'kills', 'rank_points'],
       'season': ['wins', 'kills']
     },
     'teamfortress': {
-      'main': ['wins', 'kills']
+      'main': ['wins', 'kills', 'rank_points']
     },
     'tntrun': {
-      'main': ['wins']
+      'main': ['wins', 'rank_points']
     },
     'tnttag': {
-      'main': ['wins', 'kills']
+      'main': ['wins', 'kills', 'rank_points']
     },
     'turfwars': {
-      'main': ['wins', 'kills']
+      'main': ['wins', 'kills', 'rank_points']
     }
   },
   'blocks': {

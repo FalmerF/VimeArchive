@@ -19,6 +19,7 @@
 	margin: auto;
 	margin-top: 2em;
 	background-color: var(--surface-color);
+	border-radius: var(--border-radius);
 	padding: 1em;
 }
 .graph {
@@ -26,7 +27,8 @@
 	height: 15em;
 	margin-top: 1em;
 	background-color: var(--background-color);
-	border-bottom: solid 4px #97A9B4;
+	border-bottom: solid 4px var(--primary-color);
+	border-radius: var(--border-radius);
 	display: flex;
 	overflow-y: hidden;
 	overflow-x: auto;
@@ -48,6 +50,10 @@
 	transition: all.3s ease;
 	animation: fadein-column 1s;
 	flex-shrink: 0;
+	cursor: pointer;
+}
+.column:hover {
+	filter: brightness(1.4);
 }
 .column-title {
 	width: 4em;

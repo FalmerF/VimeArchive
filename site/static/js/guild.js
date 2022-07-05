@@ -63,9 +63,9 @@ function make_member_row(member) {
 
 	name_href = document.createElement('a');
 	name_href.href = '/player/'+username;
+	name_href.append(user_head);
 	name_href.append(name_span);
 
-	name_td.append(user_head);
 	name_td.append(name_href);
 
 	row.append(index);

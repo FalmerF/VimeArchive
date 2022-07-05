@@ -149,9 +149,9 @@ function create_user_row(num, data) {
 
 		name_href = document.createElement('a');
 		name_href.href = '/guild/'+guild.get('id');
+		name_href.append(user_head);
 		name_href.append(name_span);
 
-		name_td.append(user_head);
 		name_td.append(name_href);
 
 		row.append(index);
@@ -173,9 +173,9 @@ function create_user_row(num, data) {
 
 		name_href = document.createElement('a');
 		name_href.href = 'player/'+username;
+		name_href.append(user_head);
 		name_href.append(name_span);
 
-		name_td.append(user_head);
 		name_td.append(name_href);
 
 		row.append(index);
@@ -205,13 +205,22 @@ function on_select_top() {
 
 async function load_top(top_name, game_name) {
 	document.getElementById('table-title').innerHTML = locale.get('lb_name').get(top_name.split('/')[0]);
-	if(top_name.startsWith('user_daily/')) {
-		top_name = top_name.replace('user_daily/', '');
+	if(top_name.startsWith('user_daily/') || top_name.endsWith('/rank_points')) {
+		api_top_name = '';
+		if(top_name.endsWith('/rank_points')) {
+			api_top_name = game_name.toUpperCase();
+			top_name = 'rank_points';
+		}
+		else {
+			api_top_name = top_name.replace('user_daily/', '');
+			top_name = api_top_name;
+		}
+
 		table_body = document.getElementById('table-body');
 		table_body.innerHTML = '';
 		players = null;
 		try {
-			response = await fetch('/api/leaderboard/'+top_name);
+			response = await fetch('/api/leaderboard/'+api_top_name);
 			players = json_to_map(await response.json());
 		} catch(err) {
 			isLoading = false;

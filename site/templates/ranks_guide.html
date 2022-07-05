@@ -1,0 +1,204 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>VimeArchive</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="static/css/style.css">
+		<link rel="stylesheet" href="static/css/ranks_guide_style.css">
+		<link href="/static/svg/logo.svg" rel="shortcut icon" type="image/x-icon" />
+	</head>
+	<body>
+		<div class="header" id='header'></div>
+        <div class="center-section">
+            <h1>Гайд по системе рангов</h1><br/>
+            <h2>Начало</h2>
+            <span>Ранговая система предназначена для определения лучших игроков на каждом режиме игры. В течении дня система VimeArchive собирает статистику всех игроков и считает их <b>очки ранга</b>.</span>
+            <br/>
+            <span>По количеству очков создается топ на каждый режим, за достижение определенных мест в топе, игрокам выдается значек.</span>
+            <br/>
+            <h2>Таблица рангов</h2>
+            <div class="example-section">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Значек</th>
+                            <th>Название</th>
+                            <th>Место в топе</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><img src="/static/svg/pearl_rank.svg"></td>
+                            <td>Жемчуг</td>
+                            <td>1 - 10</td>
+                        </tr>
+                        <tr>
+                            <td><img src="/static/svg/emerald_rank.svg"></td>
+                            <td>Изумруд</td>
+                            <td>11 - 35</td>
+                        </tr>
+                        <tr>
+                            <td><img src="/static/svg/diamond_rank.svg"></td>
+                            <td>Алмаз</td>
+                            <td>36 - 100</td>
+                        </tr>
+                        <tr>
+                            <td><img src="/static/svg/gold_rank.svg"></td>
+                            <td>Золото</td>
+                            <td>101 - 300</td>
+                        </tr>
+                        <tr>
+                            <td><img src="/static/svg/iron_rank.svg"></td>
+                            <td>Железо</td>
+                            <td>301 - 500</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <img src="/static/png/rank_example.png" class="example-img">
+            </div>
+            <br/>
+            <h2>Формулы</h2>
+            <span>Система рангов стремится определить наиболее скиловых игроков, по этому для каждого режима очки считаются по своему. Ниже предоставлены формулы для каждого режима.</span>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Режим</th>
+                        <th>Формула</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Annihilation</td>
+                        <td><span class="formula">kills<span style="color: var(--c2)">+</span>bowkills<span style="color: var(--c2)">*</span>2<span style="color: var(--c2)">+</span>nexus<span style="color: var(--c2)">*</span>2</span></td>
+                    </tr>
+                    <tr>
+                        <td>BuildBattle</td>
+                        <td><span class="formula">wins<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">/</span>games<span style="color: var(--c1)">)</span></span></td>
+                    </tr>
+                    <tr>
+                        <td>BlockParty</td>
+                        <td><span class="formula">wins<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">/</span>games<span style="color: var(--c1)">)</span></span></td>
+                    </tr>
+                    <tr>
+                        <td>The Bridge</td>
+                        <td><span class="formula"><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">*</span>2<span style="color: var(--c2)">+</span>points<span style="color: var(--c1)">)</span><span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">/</span>games<span style="color: var(--c1)">)</span><span style="color: var(--c2)">+</span>kills<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>kills<span style="color: var(--c2)">/</span>deaths<span style="color: var(--c1)">)</span></span></td>
+                    </tr>
+                    <tr>
+                        <td>LuckyWars</td>
+                        <td><span class="formula">wins<span style="color: var(--c2)">*</span>2<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">/</span>games<span style="color: var(--c1)">)</span><span style="color: var(--c2)">+</span>kills<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>kills<span style="color: var(--c2)">/</span>deaths<span style="color: var(--c1)">)</span></span></td>
+                    </tr>
+                    <tr>
+                        <td>BedWars</td>
+                        <td><span class="formula"><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">+</span>bedBreaked<span style="color: var(--c1)">)</span><span style="color: var(--c2)">*</span>2<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">/</span>games<span style="color: var(--c1)">)</span><span style="color: var(--c2)">+</span>kills<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>kills<span style="color: var(--c2)">/</span>deaths<span style="color: var(--c1)">)</span></span></td>
+                    </tr>
+                    <tr>
+                        <td>BedWars Turbo</td>
+                        <td><span class="formula"><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">+</span>bedBreaked<span style="color: var(--c1)">)</span><span style="color: var(--c2)">*</span>2<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">/</span>games<span style="color: var(--c1)">)</span><span style="color: var(--c2)">+</span>kills<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>kills<span style="color: var(--c2)">/</span>deaths<span style="color: var(--c1)">)</span></span></td>
+                    </tr>
+                    <tr>
+                        <td>ClashPoint</td>
+                        <td><span class="formula"><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">+</span>resourcePointsBreaked<span style="color: var(--c1)">)</span><span style="color: var(--c2)">*</span>2<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">/</span>games<span style="color: var(--c1)">)</span><span style="color: var(--c2)">+</span>kills<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>kills<span style="color: var(--c2)">/</span>deaths<span style="color: var(--c1)">)</span></span></td>
+                    </tr>
+                    <tr>
+                        <td>DeathRun</td>
+                        <td><span class="formula">wins<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">/</span>games<span style="color: var(--c1)">)</span></span></td>
+                    </tr>
+                    <tr>
+                        <td>Duels</td>
+                        <td><span class="formula">solo_wins<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>solo_wins<span style="color: var(--c2)">/</span>solo_games<span style="color: var(--c1)">)</span><span style="color: var(--c2)">+</span>team_wins<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>team_wins<span style="color: var(--c2)">/</span>team_games<span style="color: var(--c1)">)</span><span style="color: var(--c2)">+</span>ranked_wins<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>ranked_wins<span style="color: var(--c2)">/</span>ranked_games<span style="color: var(--c1)">)</span></span></td>
+                    </tr>
+                    <tr>
+                        <td>GunGame</td>
+                        <td><span class="formula"><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">*</span>3<span style="color: var(--c2)">+</span>kills<span style="color: var(--c1)">)</span><span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">/</span>games<span style="color: var(--c1)">)</span></span></td>
+                    </tr>
+                    <tr>
+                        <td>HungerGames</td>
+                        <td><span class="formula"><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">*</span>3<span style="color: var(--c2)">+</span>kills<span style="color: var(--c1)">)</span><span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">/</span>games<span style="color: var(--c1)">)</span></span></td>
+                    </tr>
+                    <tr>
+                        <td>KitPvP</td>
+                        <td><span class="formula"><span style="color: var(--c1)">(</span>points<span style="color: var(--c2)">+</span>kills<span style="color: var(--c1)">)</span><span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>kills<span style="color: var(--c2)">/</span>deaths<span style="color: var(--c1)">)</span></span></td>
+                    </tr>
+                    <tr>
+                        <td>MobWars</td>
+                        <td><span class="formula">wins<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">/</span>games<span style="color: var(--c1)">)</span></span></td>
+                    </tr>
+                    <tr>
+                        <td>Prison</td>
+                        <td><span class="formula">kills<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>kills<span style="color: var(--c2)">/</span>deaths<span style="color: var(--c1)">)</span><span style="color: var(--c2)">+</span><span style="color: var(--c1)">(</span>total_blocks<span style="color: var(--c2)">/</span>10<span style="color: var(--c1)">)</span><span style="color: var(--c2)">+</span><span style="color: var(--c1)">(</span>mobs<span style="color: var(--c2)">/</span>2<span style="color: var(--c1)">)</span></span></td>
+                    </tr>
+                    <tr>
+                        <td>SkyWars</td>
+                        <td><span class="formula">wins<span style="color: var(--c2)">*</span>2<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">/</span>games<span style="color: var(--c1)">)</span><span style="color: var(--c2)">+</span>kills<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>kills<span style="color: var(--c2)">/</span>deaths<span style="color: var(--c1)">)</span></span></td>
+                    </tr>
+                    <tr>
+                        <td>Аркады</td>
+                        <td><span class="formula">wins<span style="color: var(--c2)">*</span>2<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">/</span>games<span style="color: var(--c1)">)</span><span style="color: var(--c2)">+</span>kills<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>kills<span style="color: var(--c2)">/</span>deaths<span style="color: var(--c1)">)</span></span></td>
+                    </tr>
+                    <tr>
+                        <td>JumpLeague</td>
+                        <td><span class="formula"><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">*</span>2<span style="color: var(--c2)">+</span>checkpoints<span style="color: var(--c1)">)</span><span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">/</span>games<span style="color: var(--c1)">)</span><span style="color: var(--c2)">+</span>kills<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>kills<span style="color: var(--c2)">/</span>deaths<span style="color: var(--c1)">)</span></span></td>
+                    </tr>
+                    <tr>
+                        <td>Murder Mystery</td>
+                        <td><span class="formula"><span style="color: var(--c1)">(</span>wins_as_innocent_p<span style="color: var(--c2)">+</span>wins_as_maniac_p<span style="color: var(--c2)">+</span>wins_as_detective_p<span style="color: var(--c1)">)</span><span style="color: var(--c2)">/</span><span style="color: var(--c1)">(</span>total_wins<span style="color: var(--c2)">/</span>games<span style="color: var(--c1)">)</span><span style="color: var(--c2)">+</span>kills</span></td>
+                    </tr>
+                    <tr>
+                        <td>SheepWars</td>
+                        <td><span class="formula">wins<span style="color: var(--c2)">*</span>2<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">/</span>games<span style="color: var(--c1)">)</span><span style="color: var(--c2)">+</span>kills<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>kills<span style="color: var(--c2)">/</span>deaths<span style="color: var(--c1)">)</span></span></td>
+                    </tr>
+                    <tr>
+                        <td>Turf Wars</td>
+                        <td><span class="formula">wins<span style="color: var(--c2)">*</span>2<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">/</span>games<span style="color: var(--c1)">)</span><span style="color: var(--c2)">+</span>kills<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>kills<span style="color: var(--c2)">/</span>deaths<span style="color: var(--c1)">)</span></span></td>
+                    </tr>
+                    <tr>
+                        <td>TNT Tag</td>
+                        <td><span class="formula"><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">*</span>2<span style="color: var(--c2)">+</span>kills<span style="color: var(--c1)">)</span><span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">/</span>games<span style="color: var(--c1)">)</span></span></td>
+                    </tr>
+                    <tr>
+                        <td>Царство Зомби Мороза</td>
+                        <td><span class="formula"><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">*</span>2<span style="color: var(--c2)">+</span>kills<span style="color: var(--c1)">)</span><span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">/</span>games<span style="color: var(--c1)">)</span></span></td>
+                    </tr>
+                    <tr>
+                        <td>Hide and Seek</td>
+                        <td><span class="formula"><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">*</span>2<span style="color: var(--c2)">+</span>kills<span style="color: var(--c1)">)</span><span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">/</span>games<span style="color: var(--c1)">)</span></span></td>
+                    </tr>
+                    <tr>
+                        <td>Speed Builders</td>
+                        <td><span class="formula">wins<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">/</span>games<span style="color: var(--c1)">)</span></span></td>
+                    </tr>
+                    <tr>
+                        <td>Fall Guys</td>
+                        <td><span class="formula">wins<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">/</span>games<span style="color: var(--c1)">)</span></span></td>
+                    </tr>
+                    <tr>
+                        <td>Team Fortress</td>
+                        <td><span class="formula">wins<span style="color: var(--c2)">*</span>2<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">/</span>games<span style="color: var(--c1)">)</span><span style="color: var(--c2)">+</span>kills<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>kills<span style="color: var(--c2)">/</span>deaths<span style="color: var(--c1)">)</span></span></td>
+                    </tr>
+                    <tr>
+                        <td>Egg Wars</td>
+                        <td><span class="formula">wins<span style="color: var(--c2)">*</span>2<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>wins<span style="color: var(--c2)">/</span>games<span style="color: var(--c1)">)</span><span style="color: var(--c2)">+</span>kills<span style="color: var(--c2)">*</span><span style="color: var(--c1)">(</span>kills<span style="color: var(--c2)">/</span>deaths<span style="color: var(--c1)">)</span></span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <br/>
+            <span>Возможно для некоторых режимов можно составить более грамотную формулу и если вы это сделали, то напишите в дискорд: <b>Fa#0287</b></span>
+        </div>
+	</body>
+	<script type="text/javascript" src="/static/js/utils.js"></script>
+	<script type="text/javascript" src="/static/js/test_notify.js"></script>
+	<script type="text/javascript" src="/static/js/update.js"></script>
+	<script> 
+	    $(function(){
+	      $("#header").load("/static/html/header.html"); 
+	    });
+    </script>
+</html>

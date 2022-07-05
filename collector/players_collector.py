@@ -16,7 +16,9 @@ class PlayersCollector:
 
     def get_active_players(self):
         users = []
+        self.users_list = []
         self.status = 'Getting Players'
+
         while self.vime.limit_remaining > 100:
             n = self.check_players_index + 50
             while self.check_players_index < n and self.check_players_index < len(self.activeUsers):
@@ -32,7 +34,6 @@ class PlayersCollector:
             elif math.ceil(len(users)/50.0) > self.vime.limit_remaining:
                 self.check_players_index -= len(users)
                 return
-
         if len(users) > 0:
             data = self.vime.get_sessions(users)
             self.users_list.extend(data)
